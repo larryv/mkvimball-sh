@@ -1,0 +1,50 @@
+#!/bin/sh -
+# shellcheck disable=2006
+
+
+# mkvimball-sh 0.0 - Shell rewrite of Charles E. Campbell's "mkvimball"
+# ---------------------------------------------------------------------
+#
+# SPDX-License-Identifier: CC0-1.0
+#
+# Written in 2022 by Lawrence Velázquez <vq@larryv.me>.
+#
+# To the extent possible under law, the author(s) have dedicated all
+# copyright and related and neighboring rights to this software to the
+# public domain worldwide.  This software is distributed without any
+# warranty.
+#
+# You should have received a copy of the CC0 Public Domain Dedication
+# along with this software.  If not, see
+# <https://creativecommons.org/publicdomain/zero/1.0/>.
+
+
+# TODO: Accept non-newline-containing input paths on standard input as
+# an alternative to the original interactive mode.
+if test "$#" -lt 2; then
+    echo 'usage: mkvimball-sh outputfile inputfile ...' >&2
+    exit 1
+fi
+
+exec >"$1"
+shift
+
+# Use an older header for backward compatibility.
+cat <<\EOF || exit
+" Vimball Archiver by Charles E. Campbell, Jr., Ph.D.
+UseVimball
+finish
+EOF
+
+for inputpath
+do
+    # Some wc(1) implementations (i.e., macOS) pad the output.
+    inputlinecount=`wc -l <"$inputpath" | tr -d '[:blank:]'`
+    test "X$inputlinecount" != X || exit
+
+    # There's a literal TAB character before "[[[1".  Don't delete it!
+    cat - "$inputpath" <<EOF || exit
+$inputpath	[[[1
+$inputlinecount
+EOF
+done
