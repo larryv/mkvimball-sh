@@ -1,0 +1,285 @@
+////
+mkvimball-sh.adoc
+-----------------
+
+SPDX-License-Identifier: CC0-1.0
+
+Written in 2022 by Lawrence Velázquez <vq@larryv.me>.
+
+To the extent possible under law, the author(s) have dedicated all
+copyright and related and neighboring rights to this software to the
+public domain worldwide.  This software is distributed without any
+warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication
+along with this software.  If not, see
+<https://creativecommons.org/publicdomain/zero/1.0/>.
+////
+
+
+= mkvimball-sh(1)
+ifdef::backend-manpage[Lawrence Velazquez]
+ifndef::backend-manpage[Lawrence Velázquez]
+:doctype: manpage
+:manmanual: mkvimball-sh Manual
+:mansource: mkvimball-sh 0.0
+:orig_vimball_url: https://www.drchip.org/astronaut/vim/index.html#VIMBALL
+:orig_mkvimball_url: https://www.drchip.org/astronaut/src/index.html#MKVIMBALL
+
+
+== Name
+
+mkvimball-sh, mkvimball - create a vimball archive
+
+
+== Synopsis
+
+[%hardbreaks]
+*mkvimball-sh* _outputfile_ _inputfile_ ...
+*mkvimball* _outputname_ _inputfile_ ...
+
+
+== Description
+
+The *mkvimball-sh* utility copies the contents of the files named by the
+_inputfile_ operands to a vimball archive at _outputfile_.
+
+If installed, the *mkvimball* shim provides drop-in compatibility with
+ifdef::backend-manpage[Charles E. Campbell's original *mkvimball*.]
+ifndef::backend-manpage[{orig_mkvimball_url}[Charles E. Campbell's original *mkvimball*.]]
+It rejects _outputname_ if it contains a "." character; otherwise, it
+writes the archive to
+ifdef::backend-manpage[_outputname_._vba_.]
+ifndef::backend-manpage[`__outputname__.vba`.]
+(See <<compatibility>> for details.)
+
+Within this document, "the utilities" refers to both *mkvimball-sh* and
+the *mkvimball* shim.
+
+
+== Options
+
+None.
+
+A leading "--" argument is not recognized as a delimiter indicating the
+end of options but is used as the first operand.  This behavior may
+change in a future version.
+
+
+ifndef::env-github[[#operands]]
+== Operands
+
+The following operands are supported by *mkvimball-sh*:
+
+_outputfile_::
+The pathname of the vimball archive to be written.  If a file exists at
+_outputfile_, it is overwritten.  If the _outputfile_ operand is "-", it
+refers not to standard output but to a file named
+ifdef::backend-manpage[_-_;]
+ifndef::backend-manpage[`-`;]
+this behavior may change in a future version of *mkvimball-sh*.
+
+_inputfile_::
+A pathname of a file to be copied into the vimball archive.  The value
+of the operand itself is also included in the archive.  If an
+_inputfile_ operand is "-", it refers not to standard input but to
+a file named
+ifdef::backend-manpage[_-_;]
+ifndef::backend-manpage[`-`;]
+this behavior may change in a future version of *mkvimball-sh*.
+
+The following operands are supported by the *mkvimball* shim:
+
+_outputname_::
+A pathname used to determine where to write the vimball archive.
++
+If the _outputname_ operand contains a "." character, *mkvimball* writes
+a diagnostic message to standard error and exits with a nonzero status.
+(See <<compatibility>>.)
++
+Otherwise, the archive is written to the pathname formed by
+concatenating _outputname_ and ".vba".  If a file exists there, it is
+overwritten.  If the _outputname_ operand is "-", it refers not to
+standard output but to a file named
+ifdef::backend-manpage[_-.vba_.]
+ifndef::backend-manpage[`-.vba`.]
+
+_inputfile_::
+Same as for *mkvimball-sh*.
+
+
+== Stdin
+
+Not used, although this may change in a future version.
+
+
+ifndef::env-github[[#input-files]]
+== Input Files
+
+The input files specified as operands must be text files as defined by
+IEEE Std 1003.1-2017 (POSIX.1-2017).
+
+
+== Environment Variables
+
+The _LANG_, _LC_ALL_, _LC_CTYPE_, _LC_MESSAGES_, _NLSPATH_, and _PATH_
+environment variables affect the execution of the utilities and their
+child processes in the usual manner.
+
+
+== Asynchronous Events
+
+The standard action is taken for all signals.
+
+
+== Stdout
+
+Not used, although this may change in a future version.
+
+
+== Stderr
+
+The standard error is used only for diagnostic messages.
+
+
+== Output Files
+
+The output file is a vimball archive.
+
+
+////
+TODO: Write a description of the vimball format?
+
+== Extended Description
+////
+
+
+== Exit Status
+
+The following exit values are returned:
+
+// The "horizontal" style doesn't make a difference to the manpage
+// converter, so don't bother.
+0:: The vimball archive was created successfully.
+>0:: An error occurred.
+
+
+== Consequences of Errors
+
+If the utilities encounter an error, they exit with a nonzero status and
+do not process any further input files.  A partial vimball archive may
+be produced.
+
+
+== Application Usage
+
+The modern, preferred suffix for vimball archive pathnames is ".vmb".
+Unless compatibility is a concern, applications should avoid giving
+archives the legacy ".vba" suffix.
+
+The _inputfile_ operands are embedded in the output archive and are used
+for constructing destination pathnames during extraction.  Thus, the
+utilities must be invoked from a directory that permits passing the
+proper pathnames.  For example, given this directory structure...
+
+    /home
+    `-- dave
+        `-- src
+            `-- foo
+                |-- autoload
+                |   `-- foo.vim
+                |-- doc
+                |   `-- foo.txt
+                `-- plugin
+                    `-- foo.vim
+
+...the
+ifdef::backend-manpage[_foo_]
+ifndef::backend-manpage[`foo`]
+plugin could be packaged using the following Bourne shell command:
+
+[source,sh]
+cd /home/dave/src/foo \
+    && mkvimball-sh foo.vmb \
+        autoload/foo.vim doc/foo.txt plugin/foo.vim
+
+The utilities produce invalid vimball archives if given input files that
+do not end with a LF character (ASCII 10{nbsp}/ 0x0A{nbsp}/ 0o12) or
+that terminate lines with CR (ASCII 13{nbsp}/ 0x0D{nbsp}/ 0o15) or CRLF.
+Applications must convert such files to compliant text files (see
+<<input-files>>) before using them with the utilities; they can also be
+handled with the vimball Vim plugin.
+
+The utilities provide no facility for embedding values of the Vim
+ifdef::backend-manpage[_fileencoding_]
+ifndef::backend-manpage[`fileencoding`]
+option into archives.  Applications should consider restricting input to
+ASCII characters to avoid relying on Vim's encoding heuristics during
+extraction.
+
+
+== Examples
+
+The following command creates a vimball archive named
+ifdef::backend-manpage[_bar.vmb_:]
+ifndef::backend-manpage[`bar.vmb`:]
+
+[source,sh]
+mkvimball-sh bar.vmb autoload/bar.vim doc/bar.txt plugin/bar.vim
+
+The following commands both create a vimball archive named
+ifdef::backend-manpage[_baz.vba_:]
+ifndef::backend-manpage[`baz.vba`:]
+
+[source,sh]
+mkvimball-sh baz.vba autoload/baz.vim doc/baz.txt plugin/baz.vim
+mkvimball baz autoload/baz.vim doc/baz.txt plugin/baz.vim
+
+
+ifndef::env-github[[#compatibility]]
+== Compatibility
+
+ifdef::backend-manpage[Charles E. Campbell's original *mkvimball*]
+ifndef::backend-manpage[{orig_mkvimball_url}[Charles E. Campbell's original *mkvimball*]]
+rejects archive pathnames that contain "." characters.  The *mkvimball*
+shim retains this behavior, but *mkvimball-sh* accepts such pathnames.
+
+The original *mkvimball* appends ".vba" to those archive pathnames that
+it does accept.  The *mkvimball* shim retains this behavior, but
+*mkvimball-sh* uses all operands as given.
+
+If invoked without any input pathnames, the original *mkvimball* enters
+an interactive mode that prompts the user to enter pathnames.  Neither
+*mkvimball-sh* nor the *mkvimball* shim provides such a mode; all input
+pathnames must be provided as operands.
+
+
+== Bugs
+
+Probably.
+
+
+== See Also
+
+// The manpage converter already sets URL titles in bold, so including
+// bold formatting fouls everything up.
+ifdef::backend-manpage[]
+* The https://github.com/larryv/mkvimball-sh[mkvimball-sh homepage]
+* Charles E. Campbell's {orig_mkvimball_url}[original mkvimball]
+* Charles E. Campbell's {orig_vimball_url}[Vim plugin]
+endif::[]
+ifndef::backend-manpage[]
+* The https://github.com/larryv/mkvimball-sh[*mkvimball-sh* homepage]
+* Charles E. Campbell's {orig_mkvimball_url}[original *mkvimball*]
+* Charles E. Campbell's {orig_vimball_url}[Vim plugin]
+endif::[]
+
+== Copyright
+
+Written in {docyear} by {author}.
+
+// Do not rewrap this paragraph.  The manpage converter produces weird
+// output if the URL begins the line or if the link text is split over
+// multiple lines.
+Published from the United States of America using
+the https://creativecommons.org/publicdomain/zero/1.0/[CC0 1.0 Universal Public Domain Dedication].

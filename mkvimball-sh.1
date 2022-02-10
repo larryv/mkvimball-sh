@@ -1,0 +1,285 @@
+'\" t
+.\"     Title: mkvimball-sh
+.\"    Author: Lawrence Velazquez
+.\" Generator: Asciidoctor 2.0.17
+.\"      Date: 2022-02-15
+.\"    Manual: mkvimball-sh Manual
+.\"    Source: mkvimball-sh 0.0
+.\"  Language: English
+.\"
+.TH "MKVIMBALL\-SH" "1" "2022-02-15" "mkvimball\-sh 0.0" "mkvimball\-sh Manual"
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.ss \n[.ss] 0
+.nh
+.ad l
+.de URL
+\fI\\$2\fP <\\$1>\\$3
+..
+.als MTO URL
+.if \n[.g] \{\
+.  mso www.tmac
+.  am URL
+.    ad l
+.  .
+.  am MTO
+.    ad l
+.  .
+.  LINKSTYLE blue R < >
+.\}
+.SH "NAME"
+mkvimball-sh, mkvimball \- create a vimball archive
+.SH "SYNOPSIS"
+.sp
+\fBmkvimball\-sh\fP \fIoutputfile\fP \fIinputfile\fP ...
+.br
+\fBmkvimball\fP \fIoutputname\fP \fIinputfile\fP ...
+.SH "DESCRIPTION"
+.sp
+The \fBmkvimball\-sh\fP utility copies the contents of the files named by the
+\fIinputfile\fP operands to a vimball archive at \fIoutputfile\fP.
+.sp
+If installed, the \fBmkvimball\fP shim provides drop\-in compatibility with
+Charles E. Campbell\(cqs original \fBmkvimball\fP.
+It rejects \fIoutputname\fP if it contains a "." character; otherwise, it
+writes the archive to
+\fIoutputname\fP.\fIvba\fP.
+(See COMPATIBILITY for details.)
+.sp
+Within this document, "the utilities" refers to both \fBmkvimball\-sh\fP and
+the \fBmkvimball\fP shim.
+.SH "OPTIONS"
+.sp
+None.
+.sp
+A leading "\-\-" argument is not recognized as a delimiter indicating the
+end of options but is used as the first operand.  This behavior may
+change in a future version.
+.SH "OPERANDS"
+.sp
+The following operands are supported by \fBmkvimball\-sh\fP:
+.sp
+\fIoutputfile\fP
+.RS 4
+The pathname of the vimball archive to be written.  If a file exists at
+\fIoutputfile\fP, it is overwritten.  If the \fIoutputfile\fP operand is "\-", it
+refers not to standard output but to a file named
+\fI\-\fP;
+this behavior may change in a future version of \fBmkvimball\-sh\fP.
+.RE
+.sp
+\fIinputfile\fP
+.RS 4
+A pathname of a file to be copied into the vimball archive.  The value
+of the operand itself is also included in the archive.  If an
+\fIinputfile\fP operand is "\-", it refers not to standard input but to
+a file named
+\fI\-\fP;
+this behavior may change in a future version of \fBmkvimball\-sh\fP.
+.RE
+.sp
+The following operands are supported by the \fBmkvimball\fP shim:
+.sp
+\fIoutputname\fP
+.RS 4
+A pathname used to determine where to write the vimball archive.
+.sp
+If the \fIoutputname\fP operand contains a "." character, \fBmkvimball\fP writes
+a diagnostic message to standard error and exits with a nonzero status.
+(See COMPATIBILITY.)
+.sp
+Otherwise, the archive is written to the pathname formed by
+concatenating \fIoutputname\fP and ".vba".  If a file exists there, it is
+overwritten.  If the \fIoutputname\fP operand is "\-", it refers not to
+standard output but to a file named
+\fI\-.vba\fP.
+.RE
+.sp
+\fIinputfile\fP
+.RS 4
+Same as for \fBmkvimball\-sh\fP.
+.RE
+.SH "STDIN"
+.sp
+Not used, although this may change in a future version.
+.SH "INPUT FILES"
+.sp
+The input files specified as operands must be text files as defined by
+IEEE Std 1003.1\-2017 (POSIX.1\-2017).
+.SH "ENVIRONMENT VARIABLES"
+.sp
+The \fILANG\fP, \fILC_ALL\fP, \fILC_CTYPE\fP, \fILC_MESSAGES\fP, \fINLSPATH\fP, and \fIPATH\fP
+environment variables affect the execution of the utilities and their
+child processes in the usual manner.
+.SH "ASYNCHRONOUS EVENTS"
+.sp
+The standard action is taken for all signals.
+.SH "STDOUT"
+.sp
+Not used, although this may change in a future version.
+.SH "STDERR"
+.sp
+The standard error is used only for diagnostic messages.
+.SH "OUTPUT FILES"
+.sp
+The output file is a vimball archive.
+.SH "EXIT STATUS"
+.sp
+The following exit values are returned:
+.sp
+0
+.RS 4
+The vimball archive was created successfully.
+.RE
+.sp
+>0
+.RS 4
+An error occurred.
+.RE
+.SH "CONSEQUENCES OF ERRORS"
+.sp
+If the utilities encounter an error, they exit with a nonzero status and
+do not process any further input files.  A partial vimball archive may
+be produced.
+.SH "APPLICATION USAGE"
+.sp
+The modern, preferred suffix for vimball archive pathnames is ".vmb".
+Unless compatibility is a concern, applications should avoid giving
+archives the legacy ".vba" suffix.
+.sp
+The \fIinputfile\fP operands are embedded in the output archive and are used
+for constructing destination pathnames during extraction.  Thus, the
+utilities must be invoked from a directory that permits passing the
+proper pathnames.  For example, given this directory structure...
+.sp
+.if n .RS 4
+.nf
+.fam C
+/home
+`\-\- dave
+    `\-\- src
+        `\-\- foo
+            |\-\- autoload
+            |   `\-\- foo.vim
+            |\-\- doc
+            |   `\-\- foo.txt
+            `\-\- plugin
+                `\-\- foo.vim
+.fam
+.fi
+.if n .RE
+.sp
+\&...the
+\fIfoo\fP
+plugin could be packaged using the following Bourne shell command:
+.sp
+.if n .RS 4
+.nf
+.fam C
+cd /home/dave/src/foo \(rs
+    && mkvimball\-sh foo.vmb \(rs
+        autoload/foo.vim doc/foo.txt plugin/foo.vim
+.fam
+.fi
+.if n .RE
+.sp
+The utilities produce invalid vimball archives if given input files that
+do not end with a LF character (ASCII 10\~/ 0x0A\~/ 0o12) or
+that terminate lines with CR (ASCII 13\~/ 0x0D\~/ 0o15) or CRLF.
+Applications must convert such files to compliant text files (see
+INPUT FILES) before using them with the utilities; they can also be
+handled with the vimball Vim plugin.
+.sp
+The utilities provide no facility for embedding values of the Vim
+\fIfileencoding\fP
+option into archives.  Applications should consider restricting input to
+ASCII characters to avoid relying on Vim\(cqs encoding heuristics during
+extraction.
+.SH "EXAMPLES"
+.sp
+The following command creates a vimball archive named
+\fIbar.vmb\fP:
+.sp
+.if n .RS 4
+.nf
+.fam C
+mkvimball\-sh bar.vmb autoload/bar.vim doc/bar.txt plugin/bar.vim
+.fam
+.fi
+.if n .RE
+.sp
+The following commands both create a vimball archive named
+\fIbaz.vba\fP:
+.sp
+.if n .RS 4
+.nf
+.fam C
+mkvimball\-sh baz.vba autoload/baz.vim doc/baz.txt plugin/baz.vim
+mkvimball baz autoload/baz.vim doc/baz.txt plugin/baz.vim
+.fam
+.fi
+.if n .RE
+.SH "COMPATIBILITY"
+.sp
+Charles E. Campbell\(cqs original \fBmkvimball\fP
+rejects archive pathnames that contain "." characters.  The \fBmkvimball\fP
+shim retains this behavior, but \fBmkvimball\-sh\fP accepts such pathnames.
+.sp
+The original \fBmkvimball\fP appends ".vba" to those archive pathnames that
+it does accept.  The \fBmkvimball\fP shim retains this behavior, but
+\fBmkvimball\-sh\fP uses all operands as given.
+.sp
+If invoked without any input pathnames, the original \fBmkvimball\fP enters
+an interactive mode that prompts the user to enter pathnames.  Neither
+\fBmkvimball\-sh\fP nor the \fBmkvimball\fP shim provides such a mode; all input
+pathnames must be provided as operands.
+.SH "BUGS"
+.sp
+Probably.
+.SH "SEE ALSO"
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+The \c
+.URL "https://github.com/larryv/mkvimball\-sh" "mkvimball\-sh homepage" ""
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+Charles E. Campbell\(cqs \c
+.URL "https://www.drchip.org/astronaut/src/index.html#MKVIMBALL" "original mkvimball" ""
+.RE
+.sp
+.RS 4
+.ie n \{\
+\h'-04'\(bu\h'+03'\c
+.\}
+.el \{\
+.  sp -1
+.  IP \(bu 2.3
+.\}
+Charles E. Campbell\(cqs \c
+.URL "https://www.drchip.org/astronaut/vim/index.html#VIMBALL" "Vim plugin" ""
+.RE
+.SH "COPYRIGHT"
+.sp
+Written in 2022 by Lawrence Velazquez.
+.sp
+Published from the United States of America using
+the \c
+.URL "https://creativecommons.org/publicdomain/zero/1.0/" "CC0 1.0 Universal Public Domain Dedication" "."
+.SH "AUTHOR"
+.sp
+Lawrence Velazquez
