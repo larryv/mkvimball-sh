@@ -1,0 +1,131 @@
+////
+.github/README.adoc
+-------------------
+
+SPDX-License-Identifier: CC0-1.0
+
+Written in 2022 by Lawrence Velázquez <vq@larryv.me>.
+
+To the extent possible under law, the author(s) have dedicated all
+copyright and related and neighboring rights to this software to the
+public domain worldwide.  This software is distributed without any
+warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication
+along with this software.  If not, see
+<https://creativecommons.org/publicdomain/zero/1.0/>.
+////
+
+
+= mkvimball-sh
+
+This is
+a https://creativecommons.org/publicdomain/zero/1.0/[public-domain]
+rewrite of Charles E. Campbell's
+`https://www.drchip.org/astronaut/src/index.html#MKVIMBALL[mkvimball]`
+utility for creating
+https://www.drchip.org/astronaut/vim/index.html#VIMBALL[vimball]
+archives.  Written in portable Bourne shell, it can serve as
+a replacement for noninteractive uses on a wide range of Unix and
+Unix-like systems.  A shim is available for drop-in compatibility with
+`mkvimball`.
+
+// TODO: List some reasons why this is better than the original.
+
+
+== Requirements
+
+* A relatively recent Bourne or Bourne-compatible (including
+https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html[POSIX-conformant,title="POSIX.1-2017 - Volume 3, Chapter 2 ('Shell Command Language')"])
+shell, available at `/bin/sh`.
+
+* The typical Unix utilities, plus a couple that could be considered
+atypical:
++
+--
+** `https://pubs.opengroup.org/onlinepubs/9699919799/utilities/m4.html[m4,title="POSIX.1-2017 - Volume 3, Chapter 4 ('Utilities - m4')"]`
+for creating the compatibility shim.
+** `https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html[make,title="POSIX.1-2017 - Volume 3, Chapter 4 ('Utilities - make')"]`
+for installation.
+--
++
+https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap04.html[POSIX conformance,title="POSIX.1-2017 - Volume 3, Chapter 4 ('Utilities')"]
+is ideal, but minor transgressions are fine.
+
+* https://asciidoctor.org/[Asciidoctor] for regenerating the manual
+pages.  Only necessary if modifying the documentation source.
+
+
+== Installation / Uninstallation
+
+To install/uninstall the `mkvimball-sh` utility to/from `/usr/local`
+(privileges required, presumably):
+[source,sh]
+cd /path/to/this/repo && make install
+cd /path/to/this/repo && make uninstall
+
+To avoid overwriting the original `mkvimball`, the standard targets omit
+the compatibility shim, which is also named `mkvimball`.  To install
+both `mkvimball-sh` and the shim:
+[source,sh]
+cd /path/to/this/repo && make installshim
+
+To uninstall the shim (but not `mkvimball-sh`):
+[source,sh]
+cd /path/to/this/repo && make uninstallshim
+
+To use an installation prefix other than `/usr/local`, define the
+`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-prefix[prefix,title=GNU Make Manual - Variables for Installation Directories - 'prefix']`
+macro when invoking `make`.  For example:
+[source,sh]
+cd /path/to/this/repo && make prefix=/opt installshim
+cd /path/to/this/repo && make prefix=/opt uninstall uninstallshim
+
+The
+`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-bindir[bindir,title=GNU Make Manual - Variables for Installation Directories - 'bindir']`,
+`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html[datarootdir,title=GNU Make Manual - Variables for Installation Directories]`,
+`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-exec_005fprefix[exec_prefix,title=GNU Make Manual - Variables for Installation Directories - 'exec_prefix']`,
+`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html[man1dir,title=GNU Make Manual - Variables for Installation Directories]`,
+and
+`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html[mandir,title=GNU Make Manual - Variables for Installation Directories]`
+macros are supported for unorthodox installation hierarchies.  The
+`https://www.gnu.org/software/make/manual/html_node/DESTDIR.html[DESTDIR]`
+macro is supported for staged installs.  The `ASCIIDOCTOR`,
+`https://www.gnu.org/software/make/manual/html_node/Command-Variables.html[INSTALL,title=GNU Make Manual - Variables for Specifying Commands]`,
+`https://www.gnu.org/software/make/manual/html_node/Command-Variables.html[INSTALL_DATA,title=GNU Make Manual - Variables for Specifying Commands]`,
+`https://www.gnu.org/software/make/manual/html_node/Command-Variables.html[INSTALL_PROGRAM,title=GNU Make Manual - Variables for Specifying Commands]`,
+and `M4` macros are supported for using alternate tools.
+
+
+== Usage
+
+[source,sh]
+mkvimball-sh outputfile inputfile ...
+
+The `mkvimball-sh` utility copies the contents of the
+https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403[text files,title="POSIX.1-2017 - Volume 1, Chapter 3, Section 403 ('Text File')"]
+named by the _inputfile_ operands to a vimball archive at _outputfile_.
+
+[source,sh]
+mkvimball outputname inputfile ...
+
+The `mkvimball` shim provides drop-in compatibility with the original
+`mkvimball`.  It rejects _outputname_ if it contains a "." character;
+otherwise, it writes the archive to `__outputname__.vba`.
+
+Consult the xref:../mkvimball-sh.adoc[man page] for more details.
+
+
+// TODO: Note some differences from the original?
+
+
+== Legal
+
+The bundled `link:../install-sh[install-sh]` utility was copyrighted in
+1994 by the X{nbsp}Consortium and distributed under the
+https://spdx.org/licenses/X11.html[X11 License]; subsequent changes by
+the Free Software Foundation are in the public domain.
+
+The remainder of this work was written in 2022 by Lawrence Velázquez and
+published from the United States of America using the
+https://creativecommons.org/publicdomain/zero/1.0/[CC0 1.0 Universal Public Domain Dedication].
