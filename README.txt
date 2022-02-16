@@ -86,7 +86,7 @@ The bundled `install-sh` utility was copyrighted in 1994 by the
 X Consortium and distributed under the X11 License [13]; subsequent
 changes by the Free Software Foundation are in the public domain.
 
-The remainder of this work was written in 2022 by Lawrence Velazquez and
+The rest of this work was written in 2022 by Lawrence Velazquez and
 published from the United States of America using the CC0 1.0 Universal
 Public Domain Dedication [1].
 

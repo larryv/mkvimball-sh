@@ -199,9 +199,14 @@ ifndef::backend-manpage[`foo`]
 plugin could be packaged using the following Bourne shell command:
 
 [source,sh]
+ifdef::backend-manpage[]
 cd /home/dave/src/foo \
     && mkvimball-sh foo.vmb \
         autoload/foo.vim doc/foo.txt plugin/foo.vim
+endif::[]
+ifndef::backend-manpage[]
+cd /home/dave/src/foo && mkvimball-sh foo.vmb autoload/foo.vim doc/foo.txt plugin/foo.vim
+endif::[]
 
 The utilities produce invalid vimball archives if given input files that
 do not end with a LF character (ASCII 10{nbsp}/ 0x0A{nbsp}/ 0o12) or
@@ -233,6 +238,8 @@ ifndef::backend-manpage[`baz.vba`:]
 
 [source,sh]
 mkvimball-sh baz.vba autoload/baz.vim doc/baz.txt plugin/baz.vim
+
+[source,sh]
 mkvimball baz autoload/baz.vim doc/baz.txt plugin/baz.vim
 
 

@@ -20,7 +20,7 @@ along with this software.  If not, see
 = mkvimball-sh
 
 This is
-a https://creativecommons.org/publicdomain/zero/1.0/[public-domain]
+a https://creativecommons.org/publicdomain/zero/1.0/[public-domain,title=CC0 1.0 Universal Public Domain Dedication]
 rewrite of Charles E. Campbell's
 `https://www.drchip.org/astronaut/src/index.html#MKVIMBALL[mkvimball]`
 utility for creating
@@ -60,25 +60,33 @@ pages.  Only necessary if modifying the documentation source.
 
 To install/uninstall the `mkvimball-sh` utility to/from `/usr/local`
 (privileges required, presumably):
+
 [source,sh]
 cd /path/to/this/repo && make install
+
+[source,sh]
 cd /path/to/this/repo && make uninstall
 
 To avoid overwriting the original `mkvimball`, the standard targets omit
 the compatibility shim, which is also named `mkvimball`.  To install
 both `mkvimball-sh` and the shim:
+
 [source,sh]
 cd /path/to/this/repo && make installshim
 
 To uninstall the shim (but not `mkvimball-sh`):
+
 [source,sh]
 cd /path/to/this/repo && make uninstallshim
 
 To use an installation prefix other than `/usr/local`, define the
 `https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-prefix[prefix,title=GNU Make Manual - Variables for Installation Directories - 'prefix']`
 macro when invoking `make`.  For example:
+
 [source,sh]
 cd /path/to/this/repo && make prefix=/opt installshim
+
+[source,sh]
 cd /path/to/this/repo && make prefix=/opt uninstall uninstallshim
 
 The
@@ -126,6 +134,6 @@ The bundled `link:../install-sh[install-sh]` utility was copyrighted in
 https://spdx.org/licenses/X11.html[X11 License]; subsequent changes by
 the Free Software Foundation are in the public domain.
 
-The remainder of this work was written in 2022 by Lawrence Velázquez and
+The rest of this work was written in 2022 by Lawrence Velázquez and
 published from the United States of America using the
 https://creativecommons.org/publicdomain/zero/1.0/[CC0 1.0 Universal Public Domain Dedication].
