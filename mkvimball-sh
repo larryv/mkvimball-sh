@@ -1,6 +1,4 @@
 #!/bin/sh -
-# shellcheck disable=2006
-
 
 # mkvimball-sh 0.0 - Shell rewrite of Charles E. Campbell's "mkvimball"
 # ---------------------------------------------------------------------
