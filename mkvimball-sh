@@ -45,7 +45,7 @@ for inputpath
 do
     # Some wc(1) implementations (i.e., macOS) pad the output.
     inputlinecount=`wc -l <"$inputpath" | tr -d '[:blank:]'` || exit "$?"
-    test "X$inputlinecount" != X || exit "$?"
+    test "x$inputlinecount" != x || exit "$?"
 
     cat - "$inputpath" <<EOF || exit "$?"
 ${inputpath}${tab}[[[1
