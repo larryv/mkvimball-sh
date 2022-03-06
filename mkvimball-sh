@@ -17,7 +17,10 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
+lf='
+'
 tab='	'
+IFS=" $tab$lf"
 
 # TODO: Accept non-newline-containing input paths on standard input as
 # an alternative to the original interactive mode.
@@ -32,7 +35,7 @@ exec >"$1"
 shift
 
     # Use an older header for backward compatibility.
-    cat <<\EOF || exit
+    cat <<\EOF || exit "$?"
 " Vimball Archiver by Charles E. Campbell, Jr., Ph.D.
 UseVimball
 finish
@@ -41,10 +44,10 @@ EOF
 for inputpath
 do
     # Some wc(1) implementations (i.e., macOS) pad the output.
-    inputlinecount=`wc -l <"$inputpath" | tr -d '[:blank:]'`
-    test "X$inputlinecount" != X || exit
+    inputlinecount=`wc -l <"$inputpath" | tr -d '[:blank:]'` || exit "$?"
+    test "X$inputlinecount" != X || exit "$?"
 
-    cat - "$inputpath" <<EOF || exit
+    cat - "$inputpath" <<EOF || exit "$?"
 ${inputpath}${tab}[[[1
 $inputlinecount
 EOF
