@@ -20,15 +20,17 @@
 # TODO: Accept non-newline-containing input paths on standard input as
 # an alternative to the original interactive mode.
 if test "$#" -lt 2; then
-    echo 'usage: mkvimball-sh outputfile inputfile ...' >&2
-    exit 1
+            cat >&2 <<EOF
+usage: mkvimball-sh outputfile inputfile ...
+EOF
+            exit 1
 fi
 
 exec >"$1"
 shift
 
-# Use an older header for backward compatibility.
-cat <<\EOF || exit
+    # Use an older header for backward compatibility.
+    cat <<\EOF || exit
 " Vimball Archiver by Charles E. Campbell, Jr., Ph.D.
 UseVimball
 finish

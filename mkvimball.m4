@@ -28,7 +28,7 @@
 
 
 if test "$#" -lt 2; then
-    echo "usage: mkvimball outputname inputfile ..." >&2
+    echo >&2 'usage: mkvimball outputname inputfile ...'
     exit 1
 fi
 
