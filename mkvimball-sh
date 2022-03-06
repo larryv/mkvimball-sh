@@ -17,6 +17,8 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
+tab='	'
+
 # TODO: Accept non-newline-containing input paths on standard input as
 # an alternative to the original interactive mode.
 if test "$#" -lt 2; then
@@ -42,9 +44,8 @@ do
     inputlinecount=`wc -l <"$inputpath" | tr -d '[:blank:]'`
     test "X$inputlinecount" != X || exit
 
-    # There's a literal TAB character before "[[[1".  Don't delete it!
     cat - "$inputpath" <<EOF || exit
-$inputpath	[[[1
+${inputpath}${tab}[[[1
 $inputlinecount
 EOF
 done
