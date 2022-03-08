@@ -65,10 +65,11 @@ macros are supported for using alternate tools [11].
 Usage
 -----
 
-    mkvimball-sh <archive> <file> ...
+    mkvimball-sh <archive> [<file> ...]
 
-The `mkvimball-sh` utility copies the contents of the text files [12]
-named by the <file> operands to a vimball archive at <archive>.
+The `mkvimball-sh` utility copies the contents of its input text files
+[12] to a vimball archive at <archive>.  The input files can be specified as <file>
+operands or as a list of LF-terminated paths on standard input.
 
     mkvimball <archivebase> <file> ...
 

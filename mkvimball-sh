@@ -22,11 +22,9 @@ lf='
 tab='	'
 IFS=" $tab$lf"
 
-# TODO: Accept non-newline-containing input paths on standard input as
-# an alternative to the original interactive mode.
-if test "$#" -lt 2; then
+if test "$#" -lt 1; then
             cat >&2 <<EOF
-usage: mkvimball-sh archive file ...
+usage: mkvimball-sh archive [file ...]
 EOF
             exit 1
 fi
@@ -41,7 +39,18 @@ UseVimball
 finish
 EOF
 
-for filepath
+# Imitate pax(1) by reading <LF>-terminated input pathnames from
+# standard input in the absence of operands [3].
+case $# in
+    0) sed 's/\\/\\\\/g' ;;
+    *) : ;;
+esac | while
+    # Standard input is not passed through if there are operands, so the
+    # "0" case terminates both methods of obtaining input pathnames.
+    case $# in
+        0) IFS= read filepath || test "x$filepath" != x ;;
+        *) filepath=$1; shift ;;
+    esac
 do
     # Some wc(1) implementations (i.e., macOS) pad the output.
     filelinecount=`wc -l <"$filepath" | tr -d '[:blank:]'` || exit "$?"
@@ -52,3 +61,7 @@ ${filepath}${tab}[[[1
 $filelinecount
 EOF
 done
+
+
+# References:
+#  3. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html

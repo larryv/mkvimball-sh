@@ -38,7 +38,7 @@ mkvimball-sh, mkvimball - create a vimball archive
 == Synopsis
 
 [%hardbreaks]
-*mkvimball-sh* _archive_ _file_ ...
+*mkvimball-sh* _archive_ [_file_ ...]
 *mkvimball* _archivebase_ _file_ ...
 
 
@@ -46,6 +46,9 @@ mkvimball-sh, mkvimball - create a vimball archive
 
 The *mkvimball-sh* utility copies the contents of the files named by the
 _file_ operands to a vimball archive at _archive_.
+If no _file_ operands are specified, a list of
+LF-terminated pathnames is read from standard input, and the contents of
+the listed files are copied to the archive.
 
 If installed, the *mkvimball* shim provides drop-in compatibility with
 ifdef::backend-manpage[Charles E. Campbell's original *mkvimball*.]
@@ -88,6 +91,9 @@ of the operand itself is also included in the archive.  If a _file_
 operand is "-", it refers not to standard input but to a file named
 ifdef::backend-manpage[_-_.]
 ifndef::backend-manpage[`-`.]
++
+If no _file_ operands are specified, pathnames are read from standard
+input as described in <<stdin>>.
 
 The following operands are supported by the *mkvimball* shim:
 
@@ -106,18 +112,26 @@ ifdef::backend-manpage[_-.vba_.]
 ifndef::backend-manpage[`-.vba`.]
 
 _file_::
-Same as for *mkvimball-sh*.
+Same as for *mkvimball-sh*, except that one or more _file_ operands must
+be specified.
 
 
+ifndef::env-github[[#stdin]]
 == Stdin
 
-Not used, although this may change in a future version.
+If no _file_ operands are specified, *mkvimball-sh* reads LF-terminated
+pathnames from standard input and uses each pathname as if it had been
+a _file_ operand.  The terminating LF is optional for the final
+pathname.
+
+The *mkvimball* shim does not use the standard input, although this may
+change in a future version.
 
 
 ifndef::env-github[[#input-files]]
 == Input Files
 
-The input files specified as operands must be
+The files specified using _file_ operands or standard input must be
 ifdef::backend-manpage[text files as defined by IEEE Std 1003.1-2017 (POSIX.1-2017).]
 ifndef::backend-manpage[{posix_url_prefix}/basedefs/V1_chap03.html#tag_03_403[text files as defined by IEEE Std 1003.1-2017 (POSIX.1-2017),title="{posix_title_prefix} - Volume 1, Chapter 3, Section 403 ({quot}Text File{quot})"].]
 
@@ -179,9 +193,10 @@ The modern, preferred suffix for vimball archive pathnames is ".vmb".
 Unless compatibility is a concern, applications should avoid giving
 archives the legacy ".vba" suffix.
 
-The _file_ operands are embedded in the output archive and are used
-for constructing destination pathnames during extraction.  Thus, the
-utilities must be invoked from a directory that permits passing the
+The pathnames of input files -- whether specified as _file_ operands or
+read from standard input -- are embedded in the output archive and are
+used for constructing destination pathnames during extraction.  Thus,
+the utilities must be invoked from a directory that permits passing the
 proper pathnames.  For example, given this directory structure...
 
     /home
@@ -235,6 +250,14 @@ ifndef::backend-manpage[`ex3.vmb`:]
 mkvimball-sh ex3.vmb autoload/ex3.vim doc/ex3.txt plugin/ex3.vim
 
 The following command creates a vimball archive named
+ifdef::backend-manpage[_ex4.vmb_,]
+ifndef::backend-manpage[`ex4.vmb`,]
+with the input pathnames read from a text file:
+
+[source]
+mkvimball-sh ex4.vmb <ex4_filelist
+
+The following command creates a vimball archive named
 ifdef::backend-manpage[_ex5.vba_]
 ifndef::backend-manpage[`ex5.vba`]
 using the *mkvimball* shim:
@@ -256,9 +279,10 @@ it does accept.  The *mkvimball* shim retains this behavior, but
 *mkvimball-sh* uses all operands as given.
 
 If invoked without any input pathnames, the original *mkvimball* enters
-an interactive mode that prompts the user to enter pathnames.  Neither
-*mkvimball-sh* nor the *mkvimball* shim provides such a mode; all input
-pathnames must be provided as operands.
+an interactive mode that prompts the user to enter pathnames.  The
+*mkvimball* shim does not provide such a mode, but *mkvimball-sh* reads
+pathnames from standard input if invoked without operands (although this
+is not designed for interactive use).
 
 
 == Bugs
