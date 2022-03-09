@@ -65,16 +65,16 @@ macros are supported for using alternate tools [11].
 Usage
 -----
 
-    mkvimball-sh <outputfile> <inputfile> ...
+    mkvimball-sh <archive> <file> ...
 
 The `mkvimball-sh` utility copies the contents of the text files [12]
-named by the <inputfile> operands to a vimball archive at <outputfile>.
+named by the <file> operands to a vimball archive at <archive>.
 
-    mkvimball outputname inputfile ...
+    mkvimball <archivebase> <file> ...
 
 The `mkvimball` shim provides drop-in compatibility with the original
-`mkvimball`.  It rejects <outputname> if it contains a "." character;
-otherwise, it writes the archive to `<outputname>.vba`.
+`mkvimball`.  It rejects <archivebase> if it contains a "." character;
+otherwise, it writes the archive to `<archivebase>.vba`.
 
 Consult the man page for more details.
 
@@ -86,9 +86,10 @@ The bundled `install-sh` utility was copyrighted in 1994 by the
 X Consortium and distributed under the X11 License [13]; subsequent
 changes by the Free Software Foundation are in the public domain.
 
-The rest of this work was written in 2022 by Lawrence Velazquez and
-published from the United States of America using the CC0 1.0 Universal
-Public Domain Dedication [1].
+The rest of this work was written in 2022 by Lawrence Velazquez.  To the
+extent possible under law, the author has waived all copyright and
+related or neighboring rights [1] to the `mkvimball-sh` project.  This
+work is published from the United States of America.
 
 
 References

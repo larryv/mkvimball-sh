@@ -23,8 +23,11 @@ ifndef::backend-manpage[Lawrence Velázquez]
 :doctype: manpage
 :manmanual: mkvimball-sh Manual
 :mansource: mkvimball-sh 0.0
+:source-language: sh
 :orig_vimball_url: https://www.drchip.org/astronaut/vim/index.html#VIMBALL
 :orig_mkvimball_url: https://www.drchip.org/astronaut/src/index.html#MKVIMBALL
+:posix_title_prefix: POSIX.1-2017
+:posix_url_prefix: https://pubs.opengroup.org/onlinepubs/9699919799
 
 
 == Name
@@ -35,22 +38,22 @@ mkvimball-sh, mkvimball - create a vimball archive
 == Synopsis
 
 [%hardbreaks]
-*mkvimball-sh* _outputfile_ _inputfile_ ...
-*mkvimball* _outputname_ _inputfile_ ...
+*mkvimball-sh* _archive_ _file_ ...
+*mkvimball* _archivebase_ _file_ ...
 
 
 == Description
 
 The *mkvimball-sh* utility copies the contents of the files named by the
-_inputfile_ operands to a vimball archive at _outputfile_.
+_file_ operands to a vimball archive at _archive_.
 
 If installed, the *mkvimball* shim provides drop-in compatibility with
 ifdef::backend-manpage[Charles E. Campbell's original *mkvimball*.]
-ifndef::backend-manpage[{orig_mkvimball_url}[Charles E. Campbell's original *mkvimball*.]]
-It rejects _outputname_ if it contains a "." character; otherwise, it
+ifndef::backend-manpage[{orig_mkvimball_url}[Charles E. Campbell's original *mkvimball*].]
+It rejects _archivebase_ if it contains a "." character; otherwise, it
 writes the archive to
-ifdef::backend-manpage[_outputname_._vba_.]
-ifndef::backend-manpage[`__outputname__.vba`.]
+ifdef::backend-manpage[_archivebase_._vba_.]
+ifndef::backend-manpage[`__archivebase__.vba`.]
 (See <<compatibility>> for details.)
 
 Within this document, "the utilities" refers to both *mkvimball-sh* and
@@ -71,40 +74,38 @@ ifndef::env-github[[#operands]]
 
 The following operands are supported by *mkvimball-sh*:
 
-_outputfile_::
+_archive_::
 The pathname of the vimball archive to be written.  If a file exists at
-_outputfile_, it is overwritten.  If the _outputfile_ operand is "-", it
+_archive_, it is overwritten.  If the _archive_ operand is "-", it
 refers not to standard output but to a file named
 ifdef::backend-manpage[_-_;]
 ifndef::backend-manpage[`-`;]
 this behavior may change in a future version of *mkvimball-sh*.
 
-_inputfile_::
+_file_::
 A pathname of a file to be copied into the vimball archive.  The value
-of the operand itself is also included in the archive.  If an
-_inputfile_ operand is "-", it refers not to standard input but to
-a file named
-ifdef::backend-manpage[_-_;]
-ifndef::backend-manpage[`-`;]
-this behavior may change in a future version of *mkvimball-sh*.
+of the operand itself is also included in the archive.  If a _file_
+operand is "-", it refers not to standard input but to a file named
+ifdef::backend-manpage[_-_.]
+ifndef::backend-manpage[`-`.]
 
 The following operands are supported by the *mkvimball* shim:
 
-_outputname_::
-A pathname used to determine where to write the vimball archive.
+_archivebase_::
+A partial pathname used to determine where to write the vimball archive.
 +
-If the _outputname_ operand contains a "." character, *mkvimball* writes
-a diagnostic message to standard error and exits with a nonzero status.
-(See <<compatibility>>.)
+If the _archivebase_ operand contains a "." character, *mkvimball*
+writes a diagnostic message to standard error and exits with a nonzero
+status.  (See <<compatibility>>.)
 +
 Otherwise, the archive is written to the pathname formed by
-concatenating _outputname_ and ".vba".  If a file exists there, it is
-overwritten.  If the _outputname_ operand is "-", it refers not to
+concatenating _archivebase_ and ".vba".  If a file exists there, it is
+overwritten.  If the _archivebase_ operand is "-", it refers not to
 standard output but to a file named
 ifdef::backend-manpage[_-.vba_.]
 ifndef::backend-manpage[`-.vba`.]
 
-_inputfile_::
+_file_::
 Same as for *mkvimball-sh*.
 
 
@@ -116,8 +117,9 @@ Not used, although this may change in a future version.
 ifndef::env-github[[#input-files]]
 == Input Files
 
-The input files specified as operands must be text files as defined by
-IEEE Std 1003.1-2017 (POSIX.1-2017).
+The input files specified as operands must be
+ifdef::backend-manpage[text files as defined by IEEE Std 1003.1-2017 (POSIX.1-2017).]
+ifndef::backend-manpage[{posix_url_prefix}/basedefs/V1_chap03.html#tag_03_403[text files as defined by IEEE Std 1003.1-2017 (POSIX.1-2017),title="{posix_title_prefix} - Volume 1, Chapter 3, Section 403 ({quot}Text File{quot})"].]
 
 
 == Environment Variables
@@ -177,7 +179,7 @@ The modern, preferred suffix for vimball archive pathnames is ".vmb".
 Unless compatibility is a concern, applications should avoid giving
 archives the legacy ".vba" suffix.
 
-The _inputfile_ operands are embedded in the output archive and are used
+The _file_ operands are embedded in the output archive and are used
 for constructing destination pathnames during extraction.  Thus, the
 utilities must be invoked from a directory that permits passing the
 proper pathnames.  For example, given this directory structure...
@@ -185,27 +187,27 @@ proper pathnames.  For example, given this directory structure...
     /home
     `-- dave
         `-- src
-            `-- foo
+            `-- ex1
                 |-- autoload
-                |   `-- foo.vim
+                |   `-- ex1.vim
                 |-- doc
-                |   `-- foo.txt
+                |   `-- ex1.txt
                 `-- plugin
-                    `-- foo.vim
+                    `-- ex1.vim
 
 ...the
-ifdef::backend-manpage[_foo_]
-ifndef::backend-manpage[`foo`]
+ifdef::backend-manpage[_ex1_]
+ifndef::backend-manpage[`ex1`]
 plugin could be packaged using the following Bourne shell command:
 
-[source,sh]
+[source]
 ifdef::backend-manpage[]
-cd /home/dave/src/foo \
-    && mkvimball-sh foo.vmb \
-        autoload/foo.vim doc/foo.txt plugin/foo.vim
+cd /home/dave/src/ex1 \
+    && mkvimball-sh ex1.vmb \
+        autoload/ex1.vim doc/ex1.txt plugin/ex1.vim
 endif::[]
 ifndef::backend-manpage[]
-cd /home/dave/src/foo && mkvimball-sh foo.vmb autoload/foo.vim doc/foo.txt plugin/foo.vim
+cd /home/dave/src/ex1 && mkvimball-sh ex1.vmb autoload/ex1.vim doc/ex1.txt plugin/ex1.vim
 endif::[]
 
 The utilities produce invalid vimball archives if given input files that
@@ -226,21 +228,19 @@ extraction.
 == Examples
 
 The following command creates a vimball archive named
-ifdef::backend-manpage[_bar.vmb_:]
-ifndef::backend-manpage[`bar.vmb`:]
+ifdef::backend-manpage[_ex3.vmb_:]
+ifndef::backend-manpage[`ex3.vmb`:]
 
-[source,sh]
-mkvimball-sh bar.vmb autoload/bar.vim doc/bar.txt plugin/bar.vim
+[source]
+mkvimball-sh ex3.vmb autoload/ex3.vim doc/ex3.txt plugin/ex3.vim
 
-The following commands both create a vimball archive named
-ifdef::backend-manpage[_baz.vba_:]
-ifndef::backend-manpage[`baz.vba`:]
+The following command creates a vimball archive named
+ifdef::backend-manpage[_ex5.vba_]
+ifndef::backend-manpage[`ex5.vba`]
+using the *mkvimball* shim:
 
-[source,sh]
-mkvimball-sh baz.vba autoload/baz.vim doc/baz.txt plugin/baz.vim
-
-[source,sh]
-mkvimball baz autoload/baz.vim doc/baz.txt plugin/baz.vim
+[source]
+mkvimball ex5 autoload/ex5.vim doc/ex5.txt plugin/ex5.vim
 
 
 ifndef::env-github[[#compatibility]]
@@ -281,12 +281,18 @@ ifndef::backend-manpage[]
 * Charles E. Campbell's {orig_vimball_url}[Vim plugin]
 endif::[]
 
+
 == Copyright
 
+ifndef::backend-manpage[]
 Written in {docyear} by {author}.
+endif::[]
 
-// Do not rewrap this paragraph.  The manpage converter produces weird
-// output if the URL begins the line or if the link text is split over
-// multiple lines.
-Published from the United States of America using
-the https://creativecommons.org/publicdomain/zero/1.0/[CC0 1.0 Universal Public Domain Dedication].
+To the extent possible under law, the author(s) have dedicated all
+copyright and related and neighboring rights to this software to the
+public domain worldwide.  This software is distributed without any
+warranty.
+
+You should have received a copy of the CC0 Public Domain Dedication
+along with this software.  If not, see
+https://creativecommons.org/publicdomain/zero/1.0/.

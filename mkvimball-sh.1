@@ -2,12 +2,12 @@
 .\"     Title: mkvimball-sh
 .\"    Author: Lawrence Velazquez
 .\" Generator: Asciidoctor 2.0.17
-.\"      Date: 2022-02-15
+.\"      Date: 2022-03-08
 .\"    Manual: mkvimball-sh Manual
 .\"    Source: mkvimball-sh 0.0
 .\"  Language: English
 .\"
-.TH "MKVIMBALL\-SH" "1" "2022-02-15" "mkvimball\-sh 0.0" "mkvimball\-sh Manual"
+.TH "MKVIMBALL\-SH" "1" "2022-03-08" "mkvimball\-sh 0.0" "mkvimball\-sh Manual"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -31,19 +31,19 @@
 mkvimball-sh, mkvimball \- create a vimball archive
 .SH "SYNOPSIS"
 .sp
-\fBmkvimball\-sh\fP \fIoutputfile\fP \fIinputfile\fP ...
+\fBmkvimball\-sh\fP \fIarchive\fP \fIfile\fP ...
 .br
-\fBmkvimball\fP \fIoutputname\fP \fIinputfile\fP ...
+\fBmkvimball\fP \fIarchivebase\fP \fIfile\fP ...
 .SH "DESCRIPTION"
 .sp
 The \fBmkvimball\-sh\fP utility copies the contents of the files named by the
-\fIinputfile\fP operands to a vimball archive at \fIoutputfile\fP.
+\fIfile\fP operands to a vimball archive at \fIarchive\fP.
 .sp
 If installed, the \fBmkvimball\fP shim provides drop\-in compatibility with
 Charles E. Campbell\(cqs original \fBmkvimball\fP.
-It rejects \fIoutputname\fP if it contains a "." character; otherwise, it
+It rejects \fIarchivebase\fP if it contains a "." character; otherwise, it
 writes the archive to
-\fIoutputname\fP.\fIvba\fP.
+\fIarchivebase\fP.\fIvba\fP.
 (See COMPATIBILITY for details.)
 .sp
 Within this document, "the utilities" refers to both \fBmkvimball\-sh\fP and
@@ -59,43 +59,41 @@ change in a future version.
 .sp
 The following operands are supported by \fBmkvimball\-sh\fP:
 .sp
-\fIoutputfile\fP
+\fIarchive\fP
 .RS 4
 The pathname of the vimball archive to be written.  If a file exists at
-\fIoutputfile\fP, it is overwritten.  If the \fIoutputfile\fP operand is "\-", it
+\fIarchive\fP, it is overwritten.  If the \fIarchive\fP operand is "\-", it
 refers not to standard output but to a file named
 \fI\-\fP;
 this behavior may change in a future version of \fBmkvimball\-sh\fP.
 .RE
 .sp
-\fIinputfile\fP
+\fIfile\fP
 .RS 4
 A pathname of a file to be copied into the vimball archive.  The value
-of the operand itself is also included in the archive.  If an
-\fIinputfile\fP operand is "\-", it refers not to standard input but to
-a file named
-\fI\-\fP;
-this behavior may change in a future version of \fBmkvimball\-sh\fP.
+of the operand itself is also included in the archive.  If a \fIfile\fP
+operand is "\-", it refers not to standard input but to a file named
+\fI\-\fP.
 .RE
 .sp
 The following operands are supported by the \fBmkvimball\fP shim:
 .sp
-\fIoutputname\fP
+\fIarchivebase\fP
 .RS 4
-A pathname used to determine where to write the vimball archive.
+A partial pathname used to determine where to write the vimball archive.
 .sp
-If the \fIoutputname\fP operand contains a "." character, \fBmkvimball\fP writes
-a diagnostic message to standard error and exits with a nonzero status.
-(See COMPATIBILITY.)
+If the \fIarchivebase\fP operand contains a "." character, \fBmkvimball\fP
+writes a diagnostic message to standard error and exits with a nonzero
+status.  (See COMPATIBILITY.)
 .sp
 Otherwise, the archive is written to the pathname formed by
-concatenating \fIoutputname\fP and ".vba".  If a file exists there, it is
-overwritten.  If the \fIoutputname\fP operand is "\-", it refers not to
+concatenating \fIarchivebase\fP and ".vba".  If a file exists there, it is
+overwritten.  If the \fIarchivebase\fP operand is "\-", it refers not to
 standard output but to a file named
 \fI\-.vba\fP.
 .RE
 .sp
-\fIinputfile\fP
+\fIfile\fP
 .RS 4
 Same as for \fBmkvimball\-sh\fP.
 .RE
@@ -104,8 +102,8 @@ Same as for \fBmkvimball\-sh\fP.
 Not used, although this may change in a future version.
 .SH "INPUT FILES"
 .sp
-The input files specified as operands must be text files as defined by
-IEEE Std 1003.1\-2017 (POSIX.1\-2017).
+The input files specified as operands must be
+text files as defined by IEEE Std 1003.1\-2017 (POSIX.1\-2017).
 .SH "ENVIRONMENT VARIABLES"
 .sp
 The \fILANG\fP, \fILC_ALL\fP, \fILC_CTYPE\fP, \fILC_MESSAGES\fP, \fINLSPATH\fP, and \fIPATH\fP
@@ -147,7 +145,7 @@ The modern, preferred suffix for vimball archive pathnames is ".vmb".
 Unless compatibility is a concern, applications should avoid giving
 archives the legacy ".vba" suffix.
 .sp
-The \fIinputfile\fP operands are embedded in the output archive and are used
+The \fIfile\fP operands are embedded in the output archive and are used
 for constructing destination pathnames during extraction.  Thus, the
 utilities must be invoked from a directory that permits passing the
 proper pathnames.  For example, given this directory structure...
@@ -158,27 +156,27 @@ proper pathnames.  For example, given this directory structure...
 /home
 `\-\- dave
     `\-\- src
-        `\-\- foo
+        `\-\- ex1
             |\-\- autoload
-            |   `\-\- foo.vim
+            |   `\-\- ex1.vim
             |\-\- doc
-            |   `\-\- foo.txt
+            |   `\-\- ex1.txt
             `\-\- plugin
-                `\-\- foo.vim
+                `\-\- ex1.vim
 .fam
 .fi
 .if n .RE
 .sp
 \&...the
-\fIfoo\fP
+\fIex1\fP
 plugin could be packaged using the following Bourne shell command:
 .sp
 .if n .RS 4
 .nf
 .fam C
-cd /home/dave/src/foo \(rs
-    && mkvimball\-sh foo.vmb \(rs
-        autoload/foo.vim doc/foo.txt plugin/foo.vim
+cd /home/dave/src/ex1 \(rs
+    && mkvimball\-sh ex1.vmb \(rs
+        autoload/ex1.vim doc/ex1.txt plugin/ex1.vim
 .fam
 .fi
 .if n .RE
@@ -198,31 +196,24 @@ extraction.
 .SH "EXAMPLES"
 .sp
 The following command creates a vimball archive named
-\fIbar.vmb\fP:
+\fIex3.vmb\fP:
 .sp
 .if n .RS 4
 .nf
 .fam C
-mkvimball\-sh bar.vmb autoload/bar.vim doc/bar.txt plugin/bar.vim
+mkvimball\-sh ex3.vmb autoload/ex3.vim doc/ex3.txt plugin/ex3.vim
 .fam
 .fi
 .if n .RE
 .sp
-The following commands both create a vimball archive named
-\fIbaz.vba\fP:
+The following command creates a vimball archive named
+\fIex5.vba\fP
+using the \fBmkvimball\fP shim:
 .sp
 .if n .RS 4
 .nf
 .fam C
-mkvimball\-sh baz.vba autoload/baz.vim doc/baz.txt plugin/baz.vim
-.fam
-.fi
-.if n .RE
-.sp
-.if n .RS 4
-.nf
-.fam C
-mkvimball baz autoload/baz.vim doc/baz.txt plugin/baz.vim
+mkvimball ex5 autoload/ex5.vim doc/ex5.txt plugin/ex5.vim
 .fam
 .fi
 .if n .RE
@@ -282,11 +273,14 @@ Charles E. Campbell\(cqs \c
 .RE
 .SH "COPYRIGHT"
 .sp
-Written in 2022 by Lawrence Velazquez.
+To the extent possible under law, the author(s) have dedicated all
+copyright and related and neighboring rights to this software to the
+public domain worldwide.  This software is distributed without any
+warranty.
 .sp
-Published from the United States of America using
-the \c
-.URL "https://creativecommons.org/publicdomain/zero/1.0/" "CC0 1.0 Universal Public Domain Dedication" "."
+You should have received a copy of the CC0 Public Domain Dedication
+along with this software.  If not, see
+.URL "https://creativecommons.org/publicdomain/zero/1.0/" "" "."
 .SH "AUTHOR"
 .sp
 Lawrence Velazquez

@@ -26,7 +26,7 @@ IFS=" $tab$lf"
 # an alternative to the original interactive mode.
 if test "$#" -lt 2; then
             cat >&2 <<EOF
-usage: mkvimball-sh outputfile inputfile ...
+usage: mkvimball-sh archive file ...
 EOF
             exit 1
 fi
@@ -41,14 +41,14 @@ UseVimball
 finish
 EOF
 
-for inputpath
+for filepath
 do
     # Some wc(1) implementations (i.e., macOS) pad the output.
-    inputlinecount=`wc -l <"$inputpath" | tr -d '[:blank:]'` || exit "$?"
-    test "x$inputlinecount" != x || exit "$?"
+    filelinecount=`wc -l <"$filepath" | tr -d '[:blank:]'` || exit "$?"
+    test "x$filelinecount" != x || exit "$?"
 
-    cat - "$inputpath" <<EOF || exit "$?"
-${inputpath}${tab}[[[1
-$inputlinecount
+    cat - "$filepath" <<EOF || exit "$?"
+${filepath}${tab}[[[1
+$filelinecount
 EOF
 done

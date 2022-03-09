@@ -16,6 +16,8 @@ along with this software.  If not, see
 <https://creativecommons.org/publicdomain/zero/1.0/>.
 ////
 
+:source-language: sh
+
 
 = mkvimball-sh
 
@@ -61,32 +63,32 @@ pages.  Only necessary if modifying the documentation source.
 To install/uninstall the `mkvimball-sh` utility to/from `/usr/local`
 (privileges required, presumably):
 
-[source,sh]
+[source]
 cd /path/to/this/repo && make install
 
-[source,sh]
+[source]
 cd /path/to/this/repo && make uninstall
 
 To avoid overwriting the original `mkvimball`, the standard targets omit
 the compatibility shim, which is also named `mkvimball`.  To install
 both `mkvimball-sh` and the shim:
 
-[source,sh]
+[source]
 cd /path/to/this/repo && make installshim
 
 To uninstall the shim (but not `mkvimball-sh`):
 
-[source,sh]
+[source]
 cd /path/to/this/repo && make uninstallshim
 
 To use an installation prefix other than `/usr/local`, define the
 `https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-prefix[prefix,title=GNU Make Manual - Variables for Installation Directories - 'prefix']`
 macro when invoking `make`.  For example:
 
-[source,sh]
+[source]
 cd /path/to/this/repo && make prefix=/opt installshim
 
-[source,sh]
+[source]
 cd /path/to/this/repo && make prefix=/opt uninstall uninstallshim
 
 The
@@ -107,19 +109,19 @@ and `M4` macros are supported for using alternate tools.
 
 == Usage
 
-[source,sh]
-mkvimball-sh outputfile inputfile ...
+[source]
+mkvimball-sh archive file ...
 
 The `mkvimball-sh` utility copies the contents of the
 https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403[text files,title="POSIX.1-2017 - Volume 1, Chapter 3, Section 403 ('Text File')"]
-named by the _inputfile_ operands to a vimball archive at _outputfile_.
+named by the _file_ operands to a vimball archive at _archive_.
 
-[source,sh]
-mkvimball outputname inputfile ...
+[source]
+mkvimball archivebase file ...
 
 The `mkvimball` shim provides drop-in compatibility with the original
-`mkvimball`.  It rejects _outputname_ if it contains a "." character;
-otherwise, it writes the archive to `__outputname__.vba`.
+`mkvimball`.  It rejects _archivebase_ if it contains a "." character;
+otherwise, it writes the archive to `__archivebase__.vba`.
 
 Consult the xref:../mkvimball-sh.adoc[man page] for more details.
 
@@ -134,6 +136,8 @@ The bundled `link:../install-sh[install-sh]` utility was copyrighted in
 https://spdx.org/licenses/X11.html[X11 License]; subsequent changes by
 the Free Software Foundation are in the public domain.
 
-The rest of this work was written in 2022 by Lawrence Velázquez and
-published from the United States of America using the
-https://creativecommons.org/publicdomain/zero/1.0/[CC0 1.0 Universal Public Domain Dedication].
+The rest of this work was written in 2022 by Lawrence Velázquez.  To the
+extent possible under law, the author
+https://creativecommons.org/publicdomain/zero/1.0/[has waived all copyright and related or neighboring rights,title=Creative Commons - CC0 1.0 Universal Public Domain Dedication]
+to the `mkvimball-sh` project.  This work is published from the United
+States of America.

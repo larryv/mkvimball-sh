@@ -28,23 +28,23 @@
 
 
 if test "$#" -lt 2; then
-    echo >&2 'usage: mkvimball outputname inputfile ...'
+    echo >&2 'usage: mkvimball archivebase file ...'
     exit 1
 fi
 
 case $1 in
     *.*)
         cat >&2 <<EOF
-mkvimball: outputname cannot contain '.': $1
+mkvimball: archivebase cannot contain '.': $1
 EOF
         exit 1
         ;;
 esac
 
-outputpath=$1.vba
+archivepath=$1.vba
 `shift'
 
 case $# in
-    0) exec __MKVIMBALL_SH__ "$outputpath" ;;
-    *) exec __MKVIMBALL_SH__ "$outputpath" "$@" ;;
+    0) exec __MKVIMBALL_SH__ "$archivepath" ;;
+    *) exec __MKVIMBALL_SH__ "$archivepath" "$@" ;;
 esac
