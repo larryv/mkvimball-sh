@@ -65,13 +65,15 @@ macros are supported for using alternate tools [11].
 Usage
 -----
 
-    mkvimball-sh [-f <archive>] [--] [<file> ...]
+    mkvimball-sh [-a] [-f <archive>] [--] [<file> ...]
 
 The `mkvimball-sh` utility copies the contents of its input text files
 [12] to a vimball archive.  The input files can be specified as <file>
 operands or as a list of LF-terminated paths on standard input.  The
 archive is written to standard output or, if `-f` is specified, to
-<archive>.
+<archive>.  If `-a` is specified, the archive header is omitted from the
+output so it can be appended to an existing archive; if both `-a` and
+`-f` are specified, <archive> is appended to instead of overwritten.
 
     mkvimball <archivebase> <file> ...
 

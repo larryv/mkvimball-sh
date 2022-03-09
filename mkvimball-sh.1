@@ -2,12 +2,12 @@
 .\"     Title: mkvimball-sh
 .\"    Author: Lawrence Velazquez
 .\" Generator: Asciidoctor 2.0.17
-.\"      Date: 2022-03-08
+.\"      Date: 2022-03-09
 .\"    Manual: mkvimball-sh Manual
 .\"    Source: mkvimball-sh 0.0
 .\"  Language: English
 .\"
-.TH "MKVIMBALL\-SH" "1" "2022-03-08" "mkvimball\-sh 0.0" "mkvimball\-sh Manual"
+.TH "MKVIMBALL\-SH" "1" "2022-03-09" "mkvimball\-sh 0.0" "mkvimball\-sh Manual"
 .ie \n(.g .ds Aq \(aq
 .el       .ds Aq '
 .ss \n[.ss] 0
@@ -31,7 +31,7 @@
 mkvimball-sh, mkvimball \- create a vimball archive
 .SH "SYNOPSIS"
 .sp
-\fBmkvimball\-sh\fP [\fB\-f\fP \fIarchive\fP] [\-\-] [\fIfile\fP ...]
+\fBmkvimball\-sh\fP [\fB\-a\fP] [\fB\-f\fP \fIarchive\fP] [\-\-] [\fIfile\fP ...]
 .br
 \fBmkvimball\fP \fIarchivebase\fP \fIfile\fP ...
 .SH "DESCRIPTION"
@@ -61,11 +61,18 @@ marks the end of options.
 .sp
 The following options are supported by \fBmkvimball\-sh\fP:
 .sp
+\fB\-a\fP
+.RS 4
+Omit the archive header from the output so it can be appended to an
+existing vimball archive.
+.RE
+.sp
 \fB\-f\fP \fIarchive\fP
 .RS 4
 Write the vimball archive to \fIarchive\fP instead of standard output.  If
-a file exists at \fIarchive\fP, it is overwritten.  If \fIarchive\fP is "\-", it
-refers not to standard output but to a file named
+a file exists at \fIarchive\fP, it is overwritten unless \fB\-a\fP is specified,
+in which case it is appended to.  If \fIarchive\fP is "\-", it refers not to
+standard output but to a file named
 \fI\-\fP;
 this behavior may change in a future version of \fBmkvimball\-sh\fP.
 .RE
@@ -141,7 +148,11 @@ The \fBmkvimball\fP shim does not use standard output.
 The standard error is used only for diagnostic messages.
 .SH "OUTPUT FILES"
 .sp
-The output file is a vimball archive.
+If \fB\-f\fP is specified, the output file of \fBmkvimball\-sh\fP is a vimball
+archive unless \fB\-a\fP is also specified and \fIarchive\fP exists but is not
+a vimball archive.
+.sp
+The output file of the \fBmkvimball\fP shim is a vimball archive.
 .SH "EXIT STATUS"
 .sp
 The following exit values are returned:
@@ -258,6 +269,17 @@ using the \fBmkvimball\fP shim:
 .nf
 .fam C
 mkvimball ex5 autoload/ex5.vim doc/ex5.txt plugin/ex5.vim
+.fam
+.fi
+.if n .RE
+.sp
+The following command adds documentation to an existing vimball archive
+named \f(CRex6.vmb\fP:
+.sp
+.if n .RS 4
+.nf
+.fam C
+mkvimball\-sh \-af ex6.vmb doc/ex6.txt
 .fam
 .fi
 .if n .RE

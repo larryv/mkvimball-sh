@@ -22,6 +22,7 @@ lf='
 tab='	'
 IFS=" $tab$lf"
 
+appendflag=
 archivepath=
 stdoutflag=1
 
@@ -32,6 +33,9 @@ while :; do
     # Don't warn about "set x ...", which I'm using as a workaround [1].
     # shellcheck disable=SC2121
     case $1 in
+        -a)
+            appendflag=1
+            ;;
         -f)
             stdoutflag=
             archivepath=$2
@@ -82,7 +86,7 @@ EOF
         -?)
             cat >&2 <<EOF
 mkvimball-sh: unknown option: $1
-usage: mkvimball-sh [-f archive] [--] [file ...]
+usage: mkvimball-sh [-a] [-f archive] [--] [file ...]
 EOF
             exit 1
             ;;
@@ -94,15 +98,21 @@ EOF
 done
 
 if test ! "$stdoutflag"; then
+    if test ! "$appendflag"; then
         exec >"$archivepath"
+    else
+        exec >>"$archivepath"
+    fi
 fi
 
+if test ! "$appendflag"; then
     # Use an older header for backward compatibility.
     cat <<\EOF || exit "$?"
 " Vimball Archiver by Charles E. Campbell, Jr., Ph.D.
 UseVimball
 finish
 EOF
+fi
 
 # Imitate pax(1) by reading <LF>-terminated input pathnames from
 # standard input in the absence of operands [3].
