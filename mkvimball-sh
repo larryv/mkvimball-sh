@@ -22,15 +22,80 @@ lf='
 tab='	'
 IFS=" $tab$lf"
 
-if test "$#" -lt 1; then
+archivepath=
+stdoutflag=1
+
+while :; do
+    # NOTE: When adding a new option, update the usage text and, if the
+    # new option takes an option-argument, the "-??*" case.
+
+    # Don't warn about "set x ...", which I'm using as a workaround [1].
+    # shellcheck disable=SC2121
+    case $1 in
+        -f)
+            stdoutflag=
+            archivepath=$2
+            ;;
+        -"$lf"?*)
+            # For an option group that begins with <LF> or <apostrophe>
+            # (see the next case), just drop the remaining options and
+            # let the "-?" case error out on the next iteration.  (The
+            # case that handles other option groups uses a sed script
+            # that does not work if the leading option is <LF> or
+            # <apostrophe>.  Handling them separately is easier and more
+            # legible than fully generalizing that script.)
+            set x "-$lf"
+            ;;
+        -\'?*)
+            # See above.
+            set x -\'
+            ;;
+        -??*)
+            # Handle an option group "-xyz" by replacing it with
+            #   - "-x" and "yz" if "-x" takes an option-argument
+            #   - "-x" and "-yz" otherwise
+            # and iterating anew.  Unfortunately, I cannot think of
+            # a better way to Bourne-compatibly preserve trailing <LF>
+            # characters than splitting and quoting [2] the argument
+            # with a utility and using the result with eval(1).
+            case $1 in
+                -f*) quoteandsplit="s/'/'\\\\''/g;1s/^-./'&' '/;\$s/\$/'/" ;;
+                *) quoteandsplit="s/'/'\\\\''/g;1s/^-./'&' '-/;\$s/\$/'/" ;;
+            esac
+            quotedsplitopts=`sed "$quoteandsplit" <<EOF
+$1
+EOF
+` || exit "$?"
+            # Don't know if it's worth making this more comprehensive.
+            test "x$quotedsplitopts" != x || exit "$?"
+
+            shift
+            case $# in
+                0) eval set x "$quotedsplitopts" ;;
+                *) eval set x "$quotedsplitopts" '"$@"' ;;
+            esac
+            ;;
+        --)
+            shift
+            break
+            ;;
+        -?)
             cat >&2 <<EOF
-usage: mkvimball-sh archive [file ...]
+mkvimball-sh: unknown option: $1
+usage: mkvimball-sh [-f archive] [--] [file ...]
 EOF
             exit 1
-fi
+            ;;
+        *)
+            break
+            ;;
+    esac
+    shift
+done
 
-exec >"$1"
-shift
+if test ! "$stdoutflag"; then
+        exec >"$archivepath"
+fi
 
     # Use an older header for backward compatibility.
     cat <<\EOF || exit "$?"
@@ -64,4 +129,6 @@ done
 
 
 # References:
+#  1. https://www.in-ulm.de/~mascheck/bourne/set-.html
+#  2. https://www.etalabs.net/sh_tricks.html
 #  3. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/pax.html

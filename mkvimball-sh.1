@@ -31,14 +31,15 @@
 mkvimball-sh, mkvimball \- create a vimball archive
 .SH "SYNOPSIS"
 .sp
-\fBmkvimball\-sh\fP \fIarchive\fP [\fIfile\fP ...]
+\fBmkvimball\-sh\fP [\fB\-f\fP \fIarchive\fP] [\-\-] [\fIfile\fP ...]
 .br
 \fBmkvimball\fP \fIarchivebase\fP \fIfile\fP ...
 .SH "DESCRIPTION"
 .sp
 The \fBmkvimball\-sh\fP utility copies the contents of the files named by the
-\fIfile\fP operands to a vimball archive at \fIarchive\fP.
-If no \fIfile\fP operands are specified, a list of
+\fIfile\fP operands to a vimball archive.  The archive is written to
+standard output unless the \fB\-f\fP option is specified, in which case it is
+written to \fIarchive\fP.  If no \fIfile\fP operands are specified, a list of
 LF\-terminated pathnames is read from standard input, and the contents of
 the listed files are copied to the archive.
 .sp
@@ -53,23 +54,27 @@ Within this document, "the utilities" refers to both \fBmkvimball\-sh\fP and
 the \fBmkvimball\fP shim.
 .SH "OPTIONS"
 .sp
-None.
+\fBmkvimball\-sh\fP endeavors to conform to the
+IEEE Std 1003.1\-2017 (POSIX.1\-2017) Utility Syntax Guidelines.
+In particular, the first "\-\-" argument that is not an option\-argument
+marks the end of options.
 .sp
-A leading "\-\-" argument is not recognized as a delimiter indicating the
-end of options but is used as the first operand.  This behavior may
-change in a future version.
-.SH "OPERANDS"
+The following options are supported by \fBmkvimball\-sh\fP:
 .sp
-The following operands are supported by \fBmkvimball\-sh\fP:
-.sp
-\fIarchive\fP
+\fB\-f\fP \fIarchive\fP
 .RS 4
-The pathname of the vimball archive to be written.  If a file exists at
-\fIarchive\fP, it is overwritten.  If the \fIarchive\fP operand is "\-", it
+Write the vimball archive to \fIarchive\fP instead of standard output.  If
+a file exists at \fIarchive\fP, it is overwritten.  If \fIarchive\fP is "\-", it
 refers not to standard output but to a file named
 \fI\-\fP;
 this behavior may change in a future version of \fBmkvimball\-sh\fP.
 .RE
+.sp
+The \fBmkvimball\fP shim does not recognize the "\-\-" delimiter or any
+options.
+.SH "OPERANDS"
+.sp
+The following operands are supported by \fBmkvimball\-sh\fP:
 .sp
 \fIfile\fP
 .RS 4
@@ -127,7 +132,10 @@ child processes in the usual manner.
 The standard action is taken for all signals.
 .SH "STDOUT"
 .sp
-Not used, although this may change in a future version.
+If \fB\-f\fP is not specified, \fBmkvimball\-sh\fP writes the vimball archive to
+standard output.
+.sp
+The \fBmkvimball\fP shim does not use standard output.
 .SH "STDERR"
 .sp
 The standard error is used only for diagnostic messages.
@@ -209,13 +217,23 @@ ASCII characters to avoid relying on Vim\(cqs encoding heuristics during
 extraction.
 .SH "EXAMPLES"
 .sp
+The following command outputs a vimball archive to standard output:
+.sp
+.if n .RS 4
+.nf
+.fam C
+mkvimball\-sh autoload/ex2.vim doc/ex2.txt plugin/ex2.vim
+.fam
+.fi
+.if n .RE
+.sp
 The following command creates a vimball archive named
 \fIex3.vmb\fP:
 .sp
 .if n .RS 4
 .nf
 .fam C
-mkvimball\-sh ex3.vmb autoload/ex3.vim doc/ex3.txt plugin/ex3.vim
+mkvimball\-sh \-f ex3.vmb autoload/ex3.vim doc/ex3.txt plugin/ex3.vim
 .fam
 .fi
 .if n .RE
@@ -227,7 +245,7 @@ with the input pathnames read from a text file:
 .if n .RS 4
 .nf
 .fam C
-mkvimball\-sh ex4.vmb <ex4_filelist
+mkvimball\-sh \-f ex4.vmb <ex4_filelist
 .fam
 .fi
 .if n .RE

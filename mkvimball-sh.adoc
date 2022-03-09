@@ -38,15 +38,16 @@ mkvimball-sh, mkvimball - create a vimball archive
 == Synopsis
 
 [%hardbreaks]
-*mkvimball-sh* _archive_ [_file_ ...]
+*mkvimball-sh* [*-f* _archive_] [--] [_file_ ...]
 *mkvimball* _archivebase_ _file_ ...
 
 
 == Description
 
 The *mkvimball-sh* utility copies the contents of the files named by the
-_file_ operands to a vimball archive at _archive_.
-If no _file_ operands are specified, a list of
+_file_ operands to a vimball archive.  The archive is written to
+standard output unless the *-f* option is specified, in which case it is
+written to _archive_.  If no _file_ operands are specified, a list of
 LF-terminated pathnames is read from standard input, and the contents of
 the listed files are copied to the archive.
 
@@ -65,25 +66,30 @@ the *mkvimball* shim.
 
 == Options
 
-None.
+*mkvimball-sh* endeavors to conform to the
+ifdef::backend-manpage[IEEE Std 1003.1-2017 (POSIX.1-2017) Utility Syntax Guidelines.]
+ifndef::backend-manpage[{posix_url_prefix}/basedefs/V1_chap12.html#tag_12_02[IEEE Std 1003.1-2017 (POSIX.1-2017) Utility Syntax Guidelines,title="{posix_title_prefix} - Volume 1, Chapter 12, Section 2"].]
+In particular, the first "--" argument that is not an option-argument
+marks the end of options.
 
-A leading "--" argument is not recognized as a delimiter indicating the
-end of options but is used as the first operand.  This behavior may
-change in a future version.
+The following options are supported by *mkvimball-sh*:
+
+*-f* _archive_::
+Write the vimball archive to _archive_ instead of standard output.  If
+a file exists at _archive_, it is overwritten.  If _archive_ is "-", it
+refers not to standard output but to a file named
+ifdef::backend-manpage[_-_;]
+ifndef::backend-manpage[`-`;]
+this behavior may change in a future version of *mkvimball-sh*.
+
+The *mkvimball* shim does not recognize the "--" delimiter or any
+options.
 
 
 ifndef::env-github[[#operands]]
 == Operands
 
 The following operands are supported by *mkvimball-sh*:
-
-_archive_::
-The pathname of the vimball archive to be written.  If a file exists at
-_archive_, it is overwritten.  If the _archive_ operand is "-", it
-refers not to standard output but to a file named
-ifdef::backend-manpage[_-_;]
-ifndef::backend-manpage[`-`;]
-this behavior may change in a future version of *mkvimball-sh*.
 
 _file_::
 A pathname of a file to be copied into the vimball archive.  The value
@@ -150,7 +156,10 @@ The standard action is taken for all signals.
 
 == Stdout
 
-Not used, although this may change in a future version.
+If *-f* is not specified, *mkvimball-sh* writes the vimball archive to
+standard output.
+
+The *mkvimball* shim does not use standard output.
 
 
 == Stderr
@@ -242,12 +251,17 @@ extraction.
 
 == Examples
 
+The following command outputs a vimball archive to standard output:
+
+[source]
+mkvimball-sh autoload/ex2.vim doc/ex2.txt plugin/ex2.vim
+
 The following command creates a vimball archive named
 ifdef::backend-manpage[_ex3.vmb_:]
 ifndef::backend-manpage[`ex3.vmb`:]
 
 [source]
-mkvimball-sh ex3.vmb autoload/ex3.vim doc/ex3.txt plugin/ex3.vim
+mkvimball-sh -f ex3.vmb autoload/ex3.vim doc/ex3.txt plugin/ex3.vim
 
 The following command creates a vimball archive named
 ifdef::backend-manpage[_ex4.vmb_,]
@@ -255,7 +269,7 @@ ifndef::backend-manpage[`ex4.vmb`,]
 with the input pathnames read from a text file:
 
 [source]
-mkvimball-sh ex4.vmb <ex4_filelist
+mkvimball-sh -f ex4.vmb <ex4_filelist
 
 The following command creates a vimball archive named
 ifdef::backend-manpage[_ex5.vba_]

@@ -110,12 +110,14 @@ and `M4` macros are supported for using alternate tools.
 == Usage
 
 [source]
-mkvimball-sh archive [file ...]
+mkvimball-sh [-f archive] [--] [file ...]
 
 The `mkvimball-sh` utility copies the contents of its input
 https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403[text files,title="POSIX.1-2017 - Volume 1, Chapter 3, Section 403 ('Text File')"]
-to a vimball archive at _archive_.  The input files can be specified as _file_
-operands or as a list of LF-terminated paths on standard input.
+to a vimball archive.  The input files can be specified as _file_
+operands or as a list of LF-terminated paths on standard input.  The
+archive is written to standard output or, if `-f` is specified, to
+_archive_.
 
 [source]
 mkvimball archivebase file ...
