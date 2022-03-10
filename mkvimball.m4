@@ -1,6 +1,6 @@
 #!/bin/sh -
 
-# mkvimball - Compatibility shim for mkvimball-sh 0.0
+# mkvimball - Compatibility shim for mkvimball-sh 0.1
 # ---------------------------------------------------
 #
 # SPDX-License-Identifier: CC0-1.0
