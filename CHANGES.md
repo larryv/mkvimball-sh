@@ -25,9 +25,14 @@ repository (https://github.com/larryv/mkvimball-sh/commits/main).
 All dates are UTC.
 
 
-## Unreleased ##
+## v0.2 ##
 
--   Fix handling of `-f` option-argument.  (???????)
+2022-04-09  
+https://github.com/larryv/mkvimball-sh/releases/tag/v0.2
+
+Second development release.
+
+-   Fix handling of `-f` option-argument.  (35987fd)
 
 
 ## v0.1 ##

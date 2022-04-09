@@ -1,6 +1,6 @@
 #!/bin/sh -
 
-# mkvimball-sh 0.1 - Shell rewrite of Charles E. Campbell's "mkvimball"
+# mkvimball-sh 0.2 - Shell rewrite of Charles E. Campbell's "mkvimball"
 # ---------------------------------------------------------------------
 #
 # SPDX-License-Identifier: CC0-1.0

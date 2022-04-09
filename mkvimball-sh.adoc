@@ -22,7 +22,7 @@ ifdef::backend-manpage[Lawrence Velazquez]
 ifndef::backend-manpage[Lawrence Velázquez]
 :doctype: manpage
 :manmanual: mkvimball-sh Manual
-:mansource: mkvimball-sh 0.1
+:mansource: mkvimball-sh 0.2
 :source-language: sh
 :orig_vimball_url: https://www.drchip.org/astronaut/vim/index.html#VIMBALL
 :orig_mkvimball_url: https://www.drchip.org/astronaut/src/index.html#MKVIMBALL
