@@ -24,6 +24,12 @@
 #
 #   [*]: https://www.drchip.org/astronaut/src/index.html#MKVIMBALL
 
+
+# I've done terrible things here, in the name of portability.  To keep
+# this file lean(-ish), I've shunted notes on those things to the wiki:
+# https://github.com/larryv/mkvimball-sh/wiki/Portability
+
+
 # TODO: Implement weird interactive mode.
 
 

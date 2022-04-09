@@ -17,6 +17,11 @@
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 
 
+# I've done terrible things here, in the name of portability.  To keep
+# this file lean(-ish), I've shunted notes on those things to the wiki:
+# https://github.com/larryv/mkvimball-sh/wiki/Portability
+
+
 lf='
 '
 tab='	'
