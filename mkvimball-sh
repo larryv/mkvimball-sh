@@ -22,6 +22,8 @@ lf='
 tab='	'
 IFS=" $tab$lf"
 
+usage='usage: mkvimball-sh [-a] [-f archive] [--] [file ...]'
+
 appendflag=
 archivepath=
 stdoutflag=1
@@ -37,8 +39,16 @@ while :; do
             appendflag=1
             ;;
         -f)
+            if test "$#" -lt 2; then
+                cat >&2 <<EOF
+mkvimball-sh: -f requires an option-argument
+$usage
+EOF
+                exit 1
+            fi
             stdoutflag=
             archivepath=$2
+            shift
             ;;
         -"$lf"?*)
             # For an option group that begins with <LF> or <apostrophe>
@@ -86,7 +96,7 @@ EOF
         -?)
             cat >&2 <<EOF
 mkvimball-sh: unknown option: $1
-usage: mkvimball-sh [-a] [-f archive] [--] [file ...]
+$usage
 EOF
             exit 1
             ;;
