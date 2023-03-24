@@ -3,7 +3,7 @@ mkvimball-sh README
 
 SPDX-License-Identifier: CC0-1.0
 
-Written in 2022 by Lawrence Velázquez <vq@larryv.me>.
+Written in 2022 by Lawrence Velazquez <vq@larryv.me>.
 
 This is a public-domain [1] rewrite of Charles E. Campbell's
 `mkvimball` [2] utility for creating vimball [3] archives.  Written in
