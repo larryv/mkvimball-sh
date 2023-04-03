@@ -44,8 +44,7 @@ prefix = /usr/local
 # ---------------
 # INTERNAL MACROS
 
-# Assumes the default m4 quoting strings ("`" and "'").
-all_m4flags = -D __MKVIMBALL_SH__=\`$(bindir)/$(prog)\' $(M4FLAGS)
+all_m4flags = -D __MKVIMBALL_SH__=$(bindir)/$(prog) $(M4FLAGS)
 cleanup = { rc=$$?; rm -f $@ && exit "$$rc"; }
 manext = .1
 prog = mkvimball-sh

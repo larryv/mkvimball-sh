@@ -51,6 +51,6 @@ archivepath=$1.vba
 `shift'
 
 case $# in
-    0) exec __MKVIMBALL_SH__ -f "$archivepath" ;;
-    *) exec __MKVIMBALL_SH__ -f "$archivepath" -- "$@" ;;
+    0) exec defn([__MKVIMBALL_SH__]) -f "$archivepath" ;;
+    *) exec defn([__MKVIMBALL_SH__]) -f "$archivepath" -- "$@" ;;
 esac
