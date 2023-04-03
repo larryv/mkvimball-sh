@@ -58,8 +58,6 @@ all: FORCE $(prog) $(progman) $(shim) $(shimman)
 clean: FORCE
 	rm -f $(shim)
 
-FORCE:
-
 # Doesn't install the shim, so that a casual `make install` won't
 # overwrite the original `mkvimball` if present.  The `installshim`
 # target can be used to install the shim.
@@ -78,6 +76,17 @@ installshim: FORCE $(shim) $(shimman) install
 maintainerclean: FORCE clean
 	rm -f $(progman) $(shimman)
 
+# Doesn't delete the shim, so that a casual `make uninstall` won't
+# remove the original `mkvimball` if present.  The `uninstallshim`
+# target can be used to remove the shim.
+uninstall: FORCE
+	rm -f $(DESTDIR)$(bindir)/$(prog) $(DESTDIR)$(man1dir)/$(progman)
+
+# Intentionally does not depend on `uninstall`, to allow removing the
+# shim selectively.
+uninstallshim: FORCE
+	rm -f $(DESTDIR)$(bindir)/$(shim) $(DESTDIR)$(man1dir)/$(shimman)
+
 # TODO: Decide if SOURCE_DATE_EPOCH is worth bothering with.
 #   https://docs.asciidoctor.org/asciidoc/latest/attributes/document-attributes-ref/#note-sourcedateepoch
 #   https://reproducible-builds.org/docs/source-date-epoch/
@@ -89,16 +98,7 @@ $(progman) $(shimman): $(prog).adoc
 $(shim): $(shim).m4
 	$(M4) -D __MKVIMBALL_SH__=\`$(bindir)/$(prog)\' $(shim).m4 >$@
 
-# Doesn't delete the shim, so that a casual `make uninstall` won't
-# remove the original `mkvimball` if present.  The `uninstallshim`
-# target can be used to remove the shim.
-uninstall: FORCE
-	rm -f $(DESTDIR)$(bindir)/$(prog) $(DESTDIR)$(man1dir)/$(progman)
-
-# Intentionally does not depend on `uninstall`, to allow removing the
-# shim selectively.
-uninstallshim: FORCE
-	rm -f $(DESTDIR)$(bindir)/$(shim) $(DESTDIR)$(man1dir)/$(shimman)
+FORCE:
 
 
 # ----------
