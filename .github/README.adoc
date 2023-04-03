@@ -20,12 +20,18 @@ along with this software.  If not, see
 = mkvimball-sh
 :source-language: sh
 
+:title-cc0: CC0 1.0 Universal Public Domain Dedication
+:link-cc0: https://creativecommons.org/publicdomain/zero/1.0/
+:title-posix: POSIX.1-2017
+:url-drchip: https://www.drchip.org/astronaut
+:url-posix: https://pubs.opengroup.org/onlinepubs/9699919799
+
 This is a
-https://creativecommons.org/publicdomain/zero/1.0/[public-domain,title=CC0 1.0 Universal Public Domain Dedication]
+{link-cc0}[public-domain, title={title-cc0}]
 rewrite of Charles E. Campbell's
-`https://www.drchip.org/astronaut/src/index.html#MKVIMBALL[mkvimball]`
+`{url-drchip}/src/index.html#MKVIMBALL[mkvimball]`
 utility for creating
-https://www.drchip.org/astronaut/vim/index.html#VIMBALL[vimball]
+{url-drchip}/vim/index.html#VIMBALL[vimball]
 archives.  Written in portable Bourne shell, it can serve as
 a replacement for noninteractive uses on a wide range of Unix and
 Unix-like systems.  A shim is available for drop-in compatibility with
@@ -37,24 +43,24 @@ Unix-like systems.  A shim is available for drop-in compatibility with
 == Requirements
 
 * A relatively recent Bourne or Bourne-compatible (including
-https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html[POSIX-conformant,
-title="POSIX.1-2017 - Volume 3, Chapter 2 ('Shell Command Language')"])
+{url-posix}/utilities/V3_chap02.html[POSIX-conformant,
+title="{title-posix} - Volume 3, Chapter 2 ('Shell Command Language')"])
 shell, available at `/bin/sh`.
 
 * The typical Unix utilities, plus a couple that could be considered
 atypical:
 +
 --
-** `https://pubs.opengroup.org/onlinepubs/9699919799/utilities/m4.html[m4,
-title="POSIX.1-2017 - Volume 3, Chapter 4 ('Utilities - m4')"]`
+** `{url-posix}/utilities/m4.html[m4,
+title="{title-posix} - Volume 3, Chapter 4 ('Utilities - m4')"]`
 for creating the compatibility shim.
-** `https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html[make,
-title="POSIX.1-2017 - Volume 3, Chapter 4 ('Utilities - make')"]`
+** `{url-posix}/utilities/make.html[make,
+title="{title-posix} - Volume 3, Chapter 4 ('Utilities - make')"]`
 for installation.
 --
 +
-https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap04.html[POSIX conformance,
-title="POSIX.1-2017 - Volume 3, Chapter 4 ('Utilities')"]
+{url-posix}/utilities/V3_chap04.html[POSIX conformance,
+title="{title-posix} - Volume 3, Chapter 4 ('Utilities')"]
 is ideal, but minor transgressions are fine.
 
 * https://asciidoctor.org/[Asciidoctor] for regenerating the manual
@@ -84,9 +90,18 @@ To uninstall the shim (but not `mkvimball-sh`):
 [source]
 cd /path/to/this/repo && make uninstallshim
 
+:title-gmake-man: GNU Make Manual
+:title-gmake-man-cmdvars: {title-gmake-man} - \
+    Variables for Specifying Commands
+:title-gmake-man-dirvars: {title-gmake-man} - \
+    Variables for Installation Directories
+:url-gmake-man: https://www.gnu.org/software/make/manual/html_node
+:url-gmake-man-cmdvars: {url-gmake-man}/Command-Variables.html
+:url-gmake-man-dirvars: {url-gmake-man}/Directory-Variables.html
+
 To use an installation prefix other than `/usr/local`, define the
-`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-prefix[prefix,
-title=GNU Make Manual - Variables for Installation Directories - 'prefix']`
+`{url-gmake-man-dirvars}#index-prefix[prefix,
+title={title-gmake-man-dirvars} - 'prefix']`
 macro when invoking `make`.  For example:
 
 [source]
@@ -96,26 +111,26 @@ cd /path/to/this/repo && make prefix=/opt installshim
 cd /path/to/this/repo && make prefix=/opt uninstall uninstallshim
 
 The
-`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-bindir[bindir,
-title=GNU Make Manual - Variables for Installation Directories - 'bindir']`,
-`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html[datarootdir,
-title=GNU Make Manual - Variables for Installation Directories]`,
-`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-exec_005fprefix[exec_prefix,
-title=GNU Make Manual - Variables for Installation Directories - 'exec_prefix']`,
-`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html[man1dir,
-title=GNU Make Manual - Variables for Installation Directories]`,
+`{url-gmake-man-dirvars}#index-bindir[bindir,
+title={title-gmake-man-dirvars} - 'bindir']`,
+`{url-gmake-man-dirvars}[datarootdir,
+title={title-gmake-man-dirvars}]`,
+`{url-gmake-man-dirvars}#index-exec_005fprefix[exec_prefix,
+title={title-gmake-man-dirvars} - 'exec_prefix']`,
+`{url-gmake-man-dirvars}[man1dir,
+title={title-gmake-man-dirvars}]`,
 and
-`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html[mandir,
-title=GNU Make Manual - Variables for Installation Directories]`
+`{url-gmake-man-dirvars}[mandir,
+title={title-gmake-man-dirvars}]`
 macros are supported for unorthodox installation hierarchies.  The
-`https://www.gnu.org/software/make/manual/html_node/DESTDIR.html[DESTDIR]`
+`{url-gmake-man}/DESTDIR.html[DESTDIR]`
 macro is supported for staged installs.  The `ASCIIDOCTOR`,
-`https://www.gnu.org/software/make/manual/html_node/Command-Variables.html[INSTALL,
-title=GNU Make Manual - Variables for Specifying Commands]`,
-`https://www.gnu.org/software/make/manual/html_node/Command-Variables.html[INSTALL_DATA,
-title=GNU Make Manual - Variables for Specifying Commands]`,
-`https://www.gnu.org/software/make/manual/html_node/Command-Variables.html[INSTALL_PROGRAM,
-title=GNU Make Manual - Variables for Specifying Commands]`,
+`{url-gmake-man-cmdvars}[INSTALL,
+title={title-gmake-man-cmdvars}]`,
+`{url-gmake-man-cmdvars}[INSTALL_DATA,
+title={title-gmake-man-cmdvars}]`,
+`{url-gmake-man-cmdvars}[INSTALL_PROGRAM,
+title={title-gmake-man-cmdvars}]`,
 and `M4` macros are supported for using alternate tools.
 
 
@@ -125,8 +140,8 @@ and `M4` macros are supported for using alternate tools.
 mkvimball-sh [-a] [-f archive] [--] [file ...]
 
 The `mkvimball-sh` utility copies the contents of its input
-https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403[text files,
-title="POSIX.1-2017 - Volume 1, Chapter 3, Section 403 ('Text File')"]
+{url-posix}/basedefs/V1_chap03.html#tag_03_403[text files,
+title="{title-posix} - Volume 1, Chapter 3, Section 403 ('Text File')"]
 to a vimball archive.  The input files can be specified as _file_
 operands or as a list of LF-terminated paths on standard input.  The
 archive is written to standard output or, if `-f` is specified, to
@@ -150,7 +165,7 @@ Consult the xref:../mkvimball-sh.adoc[man page] for more details.
 == Legal
 
 To the extent possible under law, the author has
-https://creativecommons.org/publicdomain/zero/1.0/[dedicated, title=Creative Commons - CC0 1.0 Universal Public Domain Dedication]
+{link-cc0}[dedicated, title=Creative Commons - {title-cc0}]
 all copyright and related and neighboring rights to this software to the
 public domain worldwide.  This software is published from the United
 States of America and distributed without any warranty.
