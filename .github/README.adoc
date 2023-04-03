@@ -16,10 +16,9 @@ along with this software.  If not, see
 <https://creativecommons.org/publicdomain/zero/1.0/>.
 ////
 
-:source-language: sh
-
 
 = mkvimball-sh
+:source-language: sh
 
 This is
 a https://creativecommons.org/publicdomain/zero/1.0/[public-domain,title=CC0 1.0 Universal Public Domain Dedication]
