@@ -44,6 +44,7 @@ prefix = /usr/local
 # ---------------
 # INTERNAL MACROS
 
+cleanup = { rc=$$?; rm -f $@ && exit "$$rc"; }
 manext = .1
 prog = mkvimball-sh
 progman = $(prog)$(manext)
@@ -93,8 +94,10 @@ $(progman) $(shimman): $(prog).adoc
 	$(ASCIIDOCTOR) --backend=manpage $(prog).adoc
 
 # Assumes the default m4 quoting strings ("`" and "'").
+# Portably imitate .DELETE_ON_ERROR [6] because m4(1) may fail after the
+# shell creates/truncates the target.
 $(shim): $(shim).m4
-	$(M4) -D __MKVIMBALL_SH__=\`$(bindir)/$(prog)\' $(shim).m4 >$@
+	$(M4) -D __MKVIMBALL_SH__=\`$(bindir)/$(prog)\' $(shim).m4 >$@ || $(cleanup)
 
 # Imitate .PHONY portably [7].
 FORCE:
@@ -108,4 +111,5 @@ FORCE:
 #  3. https://docs.asciidoctor.org/asciidoc/latest/attributes/document-attributes-ref/#note-sourcedateepoch
 #  4. https://reproducible-builds.org/docs/source-date-epoch/
 #  5. https://reproducible-builds.org/specs/source-date-epoch/
+#  6. https://www.gnu.org/software/make/manual/html_node/Errors.html
 #  7. https://www.gnu.org/software/make/manual/html_node/Force-Targets
