@@ -54,8 +54,9 @@ To use an installation prefix other than `/usr/local`, define the
 The `bindir`, `datarootdir`, `exec_prefix`, `man1dir`, and `mandir`
 macros are supported for unorthodox installation hierarchies [9].  The
 `DESTDIR` macro is supported for staged installs [10].  The
-`ASCIIDOCTOR`, `INSTALL`, `INSTALL_DATA`, `INSTALL_PROGRAM`, and `M4`
-macros are supported for using alternate tools [11].
+`ASCIIDOCTOR` (with `ASCIIDOCTORFLAGS`), `INSTALL`, `INSTALL_DATA`,
+`INSTALL_PROGRAM`, and `M4` (with `M4FLAGS`) macros are supported for
+using alternate tools [11].
 
 
 Usage

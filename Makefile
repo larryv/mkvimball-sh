@@ -44,6 +44,8 @@ prefix = /usr/local
 # ---------------
 # INTERNAL MACROS
 
+# Assumes the default m4 quoting strings ("`" and "'").
+all_m4flags = -D __MKVIMBALL_SH__=\`$(bindir)/$(prog)\' $(M4FLAGS)
 cleanup = { rc=$$?; rm -f $@ && exit "$$rc"; }
 manext = .1
 prog = mkvimball-sh
@@ -91,13 +93,12 @@ uninstallshim: FORCE
 
 # TODO: Decide if SOURCE_DATE_EPOCH is worth bothering with [3][4][5].
 $(progman) $(shimman): $(prog).adoc
-	$(ASCIIDOCTOR) --backend=manpage $(prog).adoc
+	$(ASCIIDOCTOR) --backend=manpage $(ASCIIDOCTORFLAGS) $(prog).adoc
 
-# Assumes the default m4 quoting strings ("`" and "'").
 # Portably imitate .DELETE_ON_ERROR [6] because m4(1) may fail after the
 # shell creates/truncates the target.
 $(shim): $(shim).m4
-	$(M4) -D __MKVIMBALL_SH__=\`$(bindir)/$(prog)\' $(shim).m4 >$@ || $(cleanup)
+	$(M4) $(all_m4flags) $(shim).m4 >$@ || $(cleanup)
 
 # Imitate .PHONY portably [7].
 FORCE:
