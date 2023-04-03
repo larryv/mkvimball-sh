@@ -17,10 +17,12 @@
 
 .POSIX:
 .SUFFIXES:
+
+
+# ------------------
+# USER-FACING MACROS
+
 SHELL = /bin/sh
-
-
-# Utilities
 
 ASCIIDOCTOR = asciidoctor
 # Reduce the number of shells in play by invoking install-sh with
@@ -31,9 +33,6 @@ INSTALL_DATA = $(INSTALL) -m 644
 INSTALL_PROGRAM = $(INSTALL)
 M4 = m4
 
-
-# Locations
-
 bindir = $(exec_prefix)/bin
 datarootdir = $(prefix)/share
 exec_prefix = $(prefix)
@@ -42,7 +41,8 @@ mandir = $(datarootdir)/man
 prefix = /usr/local
 
 
-# Locations (internal use only; do not override)
+# ---------------
+# INTERNAL MACROS
 
 manext = .1
 prog = mkvimball-sh
@@ -51,7 +51,8 @@ shim = mkvimball
 shimman = $(shim)$(manext)
 
 
-# Targets
+# -------
+# TARGETS
 
 all: FORCE $(prog) $(progman) $(shim) $(shimman)
 
@@ -87,10 +88,7 @@ uninstall: FORCE
 uninstallshim: FORCE
 	rm -f $(DESTDIR)$(bindir)/$(shim) $(DESTDIR)$(man1dir)/$(shimman)
 
-# TODO: Decide if SOURCE_DATE_EPOCH is worth bothering with.
-#   https://docs.asciidoctor.org/asciidoc/latest/attributes/document-attributes-ref/#note-sourcedateepoch
-#   https://reproducible-builds.org/docs/source-date-epoch/
-#   https://reproducible-builds.org/specs/source-date-epoch/
+# TODO: Decide if SOURCE_DATE_EPOCH is worth bothering with [3][4][5].
 $(progman) $(shimman): $(prog).adoc
 	$(ASCIIDOCTOR) --backend=manpage $(prog).adoc
 
@@ -98,6 +96,7 @@ $(progman) $(shimman): $(prog).adoc
 $(shim): $(shim).m4
 	$(M4) -D __MKVIMBALL_SH__=\`$(bindir)/$(prog)\' $(shim).m4 >$@
 
+# Imitate .PHONY portably [7].
 FORCE:
 
 
@@ -106,3 +105,7 @@ FORCE:
 #
 #  1. https://www.gnu.org/software/autoconf/manual/autoconf-2.71/html_node/Invoking-the-Shell.html
 #  2. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/sh.html
+#  3. https://docs.asciidoctor.org/asciidoc/latest/attributes/document-attributes-ref/#note-sourcedateepoch
+#  4. https://reproducible-builds.org/docs/source-date-epoch/
+#  5. https://reproducible-builds.org/specs/source-date-epoch/
+#  7. https://www.gnu.org/software/make/manual/html_node/Force-Targets
