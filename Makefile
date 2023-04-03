@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2022-2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author(s) have dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -23,7 +23,10 @@ SHELL = /bin/sh
 # Utilities
 
 ASCIIDOCTOR = asciidoctor
-INSTALL = ./install-sh
+# Reduce the number of shells in play by invoking install-sh with
+# the same shell that make(1) uses.  Use "./install-sh" instead of
+# "install-sh" to preclude inadvertent PATH searches [1][2].
+INSTALL = $(SHELL) ./install-sh
 INSTALL_DATA = $(INSTALL) -m 644
 INSTALL_PROGRAM = $(INSTALL)
 M4 = m4
@@ -96,3 +99,10 @@ uninstall: FORCE
 # shim selectively.
 uninstallshim: FORCE
 	rm -f $(DESTDIR)$(bindir)/$(shim) $(DESTDIR)$(man1dir)/$(shimman)
+
+
+# ----------
+# REFERENCES
+#
+#  1. https://www.gnu.org/software/autoconf/manual/autoconf-2.71/html_node/Invoking-the-Shell.html
+#  2. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/sh.html
