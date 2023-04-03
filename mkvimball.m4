@@ -50,6 +50,7 @@ esac
 archivepath=$1.vba
 `shift'
 
+ifdef([__MKVIMBALL_SH__], [], [define([__MKVIMBALL_SH__], [mkvimball-sh])])dnl
 case $# in
     0) exec defn([__MKVIMBALL_SH__]) -f "$archivepath" ;;
     *) exec defn([__MKVIMBALL_SH__]) -f "$archivepath" -- "$@" ;;
