@@ -83,14 +83,12 @@ Consult the man page for more details.
 Legal
 -----
 
-The bundled `install-sh` utility was copyrighted in 1994 by the
-X Consortium and distributed under the X11 License [13]; subsequent
-changes by the Free Software Foundation are in the public domain.
+To the extent possible under law, the author has dedicated [1] all
+copyright and related and neighboring rights to this software to the
+public domain worldwide.  This software is published from the United
+States of America and distributed without any warranty.
 
-The rest of this work was written in 2022 by Lawrence Velazquez.  To the
-extent possible under law, the author has waived all copyright and
-related or neighboring rights [1] to the `mkvimball-sh` project.  This
-work is published from the United States of America.
+Refer to `install-sh` for its separate licensing terms.
 
 
 References
@@ -108,9 +106,8 @@ References
 10. https://www.gnu.org/software/make/manual/html_node/DESTDIR.html
 11. https://www.gnu.org/software/make/manual/html_node/Command-Variables.html
 12. https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403
-13. https://spdx.org/licenses/X11.html
 
 
 SPDX-License-Identifier: CC0-1.0
 
-Written in 2022 by Lawrence Velazquez <vq@larryv.me>.
+Written in 2022-2023 by Lawrence Velazquez <vq@larryv.me>.

@@ -4,7 +4,7 @@
 
 SPDX-License-Identifier: CC0-1.0
 
-Written in 2022 by Lawrence Velázquez <vq@larryv.me>.
+Written in 2022-2023 by Lawrence Velázquez <vq@larryv.me>.
 
 To the extent possible under law, the author(s) have dedicated all
 copyright and related and neighboring rights to this software to the
@@ -135,13 +135,13 @@ Consult the xref:../mkvimball-sh.adoc[man page] for more details.
 
 == Legal
 
-The bundled `link:../install-sh[install-sh]` utility was copyrighted in
-1994 by the X{nbsp}Consortium and distributed under the
-https://spdx.org/licenses/X11.html[X11 License]; subsequent changes by
-the Free Software Foundation are in the public domain.
+To the extent possible under law, the author has
+https://creativecommons.org/publicdomain/zero/1.0/[dedicated, title=Creative Commons - CC0 1.0 Universal Public Domain Dedication]
+all copyright and related and neighboring rights to this software to the
+public domain worldwide.  This software is published from the United
+States of America and distributed without any warranty.
 
-The rest of this work was written in 2022 by Lawrence Velázquez.  To the
-extent possible under law, the author
-https://creativecommons.org/publicdomain/zero/1.0/[has waived all copyright and related or neighboring rights,title=Creative Commons - CC0 1.0 Universal Public Domain Dedication]
-to the `mkvimball-sh` project.  This work is published from the United
-States of America.
+Refer to
+ifdef::env-github[`link:../install-sh[install-sh]`]
+ifndef::env-github[`install-sh`]
+for its separate licensing terms.
