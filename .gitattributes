@@ -21,3 +21,4 @@
 # Override GitHub's language detection.
 # https://github.com/github/linguist/blob/c1c34e5/docs/overrides.md
 *.1 linguist-generated
+install-sh linguist-vendored
