@@ -1,10 +1,6 @@
 mkvimball-sh README
 ===================
 
-SPDX-License-Identifier: CC0-1.0
-
-Written in 2022 by Lawrence Velazquez <vq@larryv.me>.
-
 This is a public-domain [1] rewrite of Charles E. Campbell's
 `mkvimball` [2] utility for creating vimball [3] archives.  Written in
 portable Bourne shell, it can serve as a replacement for noninteractive
@@ -113,3 +109,8 @@ References
 11. https://www.gnu.org/software/make/manual/html_node/Command-Variables.html
 12. https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403
 13. https://spdx.org/licenses/X11.html
+
+
+SPDX-License-Identifier: CC0-1.0
+
+Written in 2022 by Lawrence Velazquez <vq@larryv.me>.
