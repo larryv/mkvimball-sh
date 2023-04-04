@@ -357,7 +357,7 @@ endif::[]
 == Copyright
 
 ifndef::backend-manpage[]
-Written in {docyear} by {author}.
+Written by {author}.
 endif::[]
 
 To the extent possible under law, the author(s) have dedicated all
