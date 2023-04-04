@@ -76,7 +76,8 @@ ifdef::backend-manpage[]
 IEEE Std 1003.1-2017 (POSIX.1-2017) Utility Syntax Guidelines.
 endif::[]
 ifndef::backend-manpage[]
-{posix_url_prefix}/basedefs/V1_chap12.html#tag_12_02[IEEE Std 1003.1-2017 (POSIX.1-2017) Utility Syntax Guidelines,title="{posix_title_prefix} - Volume 1, Chapter 12, Section 2"].
+{posix_url_prefix}/basedefs/V1_chap12.html#tag_12_02[IEEE Std 1003.1-2017 (POSIX.1-2017) Utility Syntax Guidelines,
+title="{posix_title_prefix} - Volume 1, Chapter 12, Section 2"].
 endif::[]
 In particular, the first "--" argument that is not an option-argument
 marks the end of options.
@@ -156,7 +157,8 @@ ifdef::backend-manpage[]
 text files as defined by IEEE Std 1003.1-2017 (POSIX.1-2017).
 endif::[]
 ifndef::backend-manpage[]
-{posix_url_prefix}/basedefs/V1_chap03.html#tag_03_403[text files as defined by IEEE Std 1003.1-2017 (POSIX.1-2017),title="{posix_title_prefix} - Volume 1, Chapter 3, Section 403 ({quot}Text File{quot})"].
+{posix_url_prefix}/basedefs/V1_chap03.html#tag_03_403[text files as defined by IEEE Std 1003.1-2017 (POSIX.1-2017),
+title="{posix_title_prefix} - Volume 1, Chapter 3, Section 403 ({quot}Text File{quot})"].
 endif::[]
 
 

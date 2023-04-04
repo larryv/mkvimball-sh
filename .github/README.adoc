@@ -37,20 +37,24 @@ Unix-like systems.  A shim is available for drop-in compatibility with
 == Requirements
 
 * A relatively recent Bourne or Bourne-compatible (including
-https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html[POSIX-conformant,title="POSIX.1-2017 - Volume 3, Chapter 2 ('Shell Command Language')"])
+https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html[POSIX-conformant,
+title="POSIX.1-2017 - Volume 3, Chapter 2 ('Shell Command Language')"])
 shell, available at `/bin/sh`.
 
 * The typical Unix utilities, plus a couple that could be considered
 atypical:
 +
 --
-** `https://pubs.opengroup.org/onlinepubs/9699919799/utilities/m4.html[m4,title="POSIX.1-2017 - Volume 3, Chapter 4 ('Utilities - m4')"]`
+** `https://pubs.opengroup.org/onlinepubs/9699919799/utilities/m4.html[m4,
+title="POSIX.1-2017 - Volume 3, Chapter 4 ('Utilities - m4')"]`
 for creating the compatibility shim.
-** `https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html[make,title="POSIX.1-2017 - Volume 3, Chapter 4 ('Utilities - make')"]`
+** `https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html[make,
+title="POSIX.1-2017 - Volume 3, Chapter 4 ('Utilities - make')"]`
 for installation.
 --
 +
-https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap04.html[POSIX conformance,title="POSIX.1-2017 - Volume 3, Chapter 4 ('Utilities')"]
+https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap04.html[POSIX conformance,
+title="POSIX.1-2017 - Volume 3, Chapter 4 ('Utilities')"]
 is ideal, but minor transgressions are fine.
 
 * https://asciidoctor.org/[Asciidoctor] for regenerating the manual
@@ -81,7 +85,8 @@ To uninstall the shim (but not `mkvimball-sh`):
 cd /path/to/this/repo && make uninstallshim
 
 To use an installation prefix other than `/usr/local`, define the
-`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-prefix[prefix,title=GNU Make Manual - Variables for Installation Directories - 'prefix']`
+`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-prefix[prefix,
+title=GNU Make Manual - Variables for Installation Directories - 'prefix']`
 macro when invoking `make`.  For example:
 
 [source]
@@ -91,18 +96,26 @@ cd /path/to/this/repo && make prefix=/opt installshim
 cd /path/to/this/repo && make prefix=/opt uninstall uninstallshim
 
 The
-`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-bindir[bindir,title=GNU Make Manual - Variables for Installation Directories - 'bindir']`,
-`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html[datarootdir,title=GNU Make Manual - Variables for Installation Directories]`,
-`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-exec_005fprefix[exec_prefix,title=GNU Make Manual - Variables for Installation Directories - 'exec_prefix']`,
-`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html[man1dir,title=GNU Make Manual - Variables for Installation Directories]`,
+`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-bindir[bindir,
+title=GNU Make Manual - Variables for Installation Directories - 'bindir']`,
+`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html[datarootdir,
+title=GNU Make Manual - Variables for Installation Directories]`,
+`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html#index-exec_005fprefix[exec_prefix,
+title=GNU Make Manual - Variables for Installation Directories - 'exec_prefix']`,
+`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html[man1dir,
+title=GNU Make Manual - Variables for Installation Directories]`,
 and
-`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html[mandir,title=GNU Make Manual - Variables for Installation Directories]`
+`https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html[mandir,
+title=GNU Make Manual - Variables for Installation Directories]`
 macros are supported for unorthodox installation hierarchies.  The
 `https://www.gnu.org/software/make/manual/html_node/DESTDIR.html[DESTDIR]`
 macro is supported for staged installs.  The `ASCIIDOCTOR`,
-`https://www.gnu.org/software/make/manual/html_node/Command-Variables.html[INSTALL,title=GNU Make Manual - Variables for Specifying Commands]`,
-`https://www.gnu.org/software/make/manual/html_node/Command-Variables.html[INSTALL_DATA,title=GNU Make Manual - Variables for Specifying Commands]`,
-`https://www.gnu.org/software/make/manual/html_node/Command-Variables.html[INSTALL_PROGRAM,title=GNU Make Manual - Variables for Specifying Commands]`,
+`https://www.gnu.org/software/make/manual/html_node/Command-Variables.html[INSTALL,
+title=GNU Make Manual - Variables for Specifying Commands]`,
+`https://www.gnu.org/software/make/manual/html_node/Command-Variables.html[INSTALL_DATA,
+title=GNU Make Manual - Variables for Specifying Commands]`,
+`https://www.gnu.org/software/make/manual/html_node/Command-Variables.html[INSTALL_PROGRAM,
+title=GNU Make Manual - Variables for Specifying Commands]`,
 and `M4` macros are supported for using alternate tools.
 
 
@@ -112,7 +125,8 @@ and `M4` macros are supported for using alternate tools.
 mkvimball-sh [-a] [-f archive] [--] [file ...]
 
 The `mkvimball-sh` utility copies the contents of its input
-https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403[text files,title="POSIX.1-2017 - Volume 1, Chapter 3, Section 403 ('Text File')"]
+https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403[text files,
+title="POSIX.1-2017 - Volume 1, Chapter 3, Section 403 ('Text File')"]
 to a vimball archive.  The input files can be specified as _file_
 operands or as a list of LF-terminated paths on standard input.  The
 archive is written to standard output or, if `-f` is specified, to
