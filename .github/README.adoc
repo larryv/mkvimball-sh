@@ -20,8 +20,8 @@ along with this software.  If not, see
 = mkvimball-sh
 :source-language: sh
 
-This is
-a https://creativecommons.org/publicdomain/zero/1.0/[public-domain,title=CC0 1.0 Universal Public Domain Dedication]
+This is a
+https://creativecommons.org/publicdomain/zero/1.0/[public-domain,title=CC0 1.0 Universal Public Domain Dedication]
 rewrite of Charles E. Campbell's
 `https://www.drchip.org/astronaut/src/index.html#MKVIMBALL[mkvimball]`
 utility for creating
