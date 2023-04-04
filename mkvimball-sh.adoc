@@ -53,8 +53,12 @@ LF-terminated pathnames is read from standard input, and the contents of
 the listed files are copied to the archive.
 
 If installed, the *mkvimball* shim provides drop-in compatibility with
-ifdef::backend-manpage[Charles E. Campbell's original *mkvimball*.]
-ifndef::backend-manpage[{orig_mkvimball_url}[Charles E. Campbell's original *mkvimball*].]
+ifdef::backend-manpage[]
+Charles E. Campbell's original *mkvimball*.
+endif::[]
+ifndef::backend-manpage[]
+{orig_mkvimball_url}[Charles E. Campbell's original *mkvimball*].
+endif::[]
 It rejects _archivebase_ if it contains a "." character; otherwise, it
 writes the archive to
 ifdef::backend-manpage[_archivebase_._vba_.]
@@ -68,8 +72,12 @@ the *mkvimball* shim.
 == Options
 
 *mkvimball-sh* endeavors to conform to the
-ifdef::backend-manpage[IEEE Std 1003.1-2017 (POSIX.1-2017) Utility Syntax Guidelines.]
-ifndef::backend-manpage[{posix_url_prefix}/basedefs/V1_chap12.html#tag_12_02[IEEE Std 1003.1-2017 (POSIX.1-2017) Utility Syntax Guidelines,title="{posix_title_prefix} - Volume 1, Chapter 12, Section 2"].]
+ifdef::backend-manpage[]
+IEEE Std 1003.1-2017 (POSIX.1-2017) Utility Syntax Guidelines.
+endif::[]
+ifndef::backend-manpage[]
+{posix_url_prefix}/basedefs/V1_chap12.html#tag_12_02[IEEE Std 1003.1-2017 (POSIX.1-2017) Utility Syntax Guidelines,title="{posix_title_prefix} - Volume 1, Chapter 12, Section 2"].
+endif::[]
 In particular, the first "--" argument that is not an option-argument
 marks the end of options.
 
@@ -144,8 +152,12 @@ ifndef::env-github[[#input-files]]
 == Input Files
 
 The files specified using _file_ operands or standard input must be
-ifdef::backend-manpage[text files as defined by IEEE Std 1003.1-2017 (POSIX.1-2017).]
-ifndef::backend-manpage[{posix_url_prefix}/basedefs/V1_chap03.html#tag_03_403[text files as defined by IEEE Std 1003.1-2017 (POSIX.1-2017),title="{posix_title_prefix} - Volume 1, Chapter 3, Section 403 ({quot}Text File{quot})"].]
+ifdef::backend-manpage[]
+text files as defined by IEEE Std 1003.1-2017 (POSIX.1-2017).
+endif::[]
+ifndef::backend-manpage[]
+{posix_url_prefix}/basedefs/V1_chap03.html#tag_03_403[text files as defined by IEEE Std 1003.1-2017 (POSIX.1-2017),title="{posix_title_prefix} - Volume 1, Chapter 3, Section 403 ({quot}Text File{quot})"].
+endif::[]
 
 
 == Environment Variables
@@ -299,8 +311,12 @@ mkvimball-sh -af ex6.vmb doc/ex6.txt
 ifndef::env-github[[#compatibility]]
 == Compatibility
 
-ifdef::backend-manpage[Charles E. Campbell's original *mkvimball*]
-ifndef::backend-manpage[{orig_mkvimball_url}[Charles E. Campbell's original *mkvimball*]]
+ifdef::backend-manpage[]
+Charles E. Campbell's original *mkvimball*
+endif::[]
+ifndef::backend-manpage[]
+{orig_mkvimball_url}[Charles E. Campbell's original *mkvimball*]
+endif::[]
 rejects archive pathnames that contain "." characters.  The *mkvimball*
 shim retains this behavior, but *mkvimball-sh* accepts such pathnames.
 
