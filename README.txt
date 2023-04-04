@@ -1,5 +1,5 @@
-mkvimball-sh README
-===================
+mkvimball-sh
+============
 
 This is a public-domain [1] rewrite of Charles E. Campbell's
 `mkvimball` [2] utility for creating vimball [3] archives.  Written in
