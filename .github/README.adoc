@@ -69,7 +69,7 @@ for installation.
 title="{title-posix} - Volume 3, Chapter 4 ('Utilities')"]
 is ideal, but minor transgressions are fine.
 
-* https://asciidoctor.org/[Asciidoctor] for regenerating the manual
+* https://asciidoctor.org[Asciidoctor] for regenerating the manual
 pages.  Only necessary if modifying the documentation source.
 
 

@@ -102,7 +102,7 @@ References
  5. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/m4.html
  6. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html
  7. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap04.html
- 8. https://asciidoctor.org/
+ 8. https://asciidoctor.org
  9. https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html
 10. https://www.gnu.org/software/make/manual/html_node/DESTDIR.html
 11. https://www.gnu.org/software/make/manual/html_node/Command-Variables.html
