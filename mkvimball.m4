@@ -1,3 +1,4 @@
+changequote([, ])dnl
 divert(1)dnl
 dnl
 dnl
@@ -18,7 +19,7 @@ dnl
 # <https://creativecommons.org/publicdomain/zero/1.0/>.
 dnl
 dnl
-divert`'dnl
+divert[]dnl
 #!/bin/sh -
 
 # mkvimball - Compatibility shim for mkvimball-sh 0.2
@@ -61,7 +62,7 @@ EOF
 esac
 
 archivepath=$1.vba
-`shift'
+[shift]
 
 ifdef([__MKVIMBALL_SH__], [], [define([__MKVIMBALL_SH__], [mkvimball-sh])])dnl
 case $# in
