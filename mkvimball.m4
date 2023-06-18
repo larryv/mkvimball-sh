@@ -9,7 +9,7 @@ dnl SPDX-License-Identifier: CC0-1.0
 dnl
 dnl Written in 2022-2023 by Lawrence Velazquez <vq@larryv.me>.
 dnl
-# To the extent possible under law, the author(s) have dedicated all
+# To the extent possible under law, the author has dedicated all
 # copyright and related and neighboring rights to this software to the
 # public domain worldwide.  This software is distributed without any
 # warranty.
