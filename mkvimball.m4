@@ -47,6 +47,12 @@ undivert(1)
 # TODO: Implement weird interactive mode.
 
 
+lf='
+'
+sp=' '
+tab='	'
+IFS=$sp$tab$lf
+
 if test "$#" -lt 2
 then
 	echo >&2 'usage: mkvimball archivebase file ...'

@@ -24,8 +24,9 @@
 
 lf='
 '
+sp=' '
 tab='	'
-IFS=" $tab$lf"
+IFS=$sp$tab$lf
 
 usage='usage: mkvimball-sh [-a] [-f archive] [--] [file ...]'
 
