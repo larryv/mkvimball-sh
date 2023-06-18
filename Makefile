@@ -62,10 +62,22 @@ all: FORCE $(prog) $(progman) $(shim) $(shimman)
 clean: FORCE
 	rm -f $(shim)
 
-# Doesn't install the shim, so that a casual `make install` won't
-# overwrite the original `mkvimball` if present.  The `installshim`
-# target can be used to install the shim.
+# The `install` target doesn't install the shim, so that a casual `make
+# install` won't overwrite the original `mkvimball` if present.  The
+# `installshim` target can be used to install the shim.
+
+# If BAR/FOO is a directory or a symlink to one, then the behavior of
+# `install FOO BAR` varies *significantly* among implementations.
+# Ensure consistent results by detecting this situation and bailing out.
 install: FORCE $(prog) $(progman) installdirs
+	@for p in $(DESTDIR)$(bindir)/$(prog) $(DESTDIR)$(man1dir)/$(progman); \
+do \
+    if test -d "$$p"; \
+    then \
+        printf 'will not overwrite directory: %s\n' "$$p" >&2; \
+        exit 1; \
+    fi; \
+done
 	$(INSTALL_PROGRAM) $(prog) $(DESTDIR)$(bindir)/$(prog)
 	-$(INSTALL_DATA) $(progman) $(DESTDIR)$(man1dir)/$(progman)
 
@@ -73,7 +85,16 @@ installdirs: FORCE
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	-$(INSTALL) -d $(DESTDIR)$(man1dir)
 
+# See the `install` target for an explanation of the gross prelude.
 installshim: FORCE $(shim) $(shimman) install
+	@for p in $(DESTDIR)$(bindir)/$(shim) $(DESTDIR)$(man1dir)/$(shimman); \
+do \
+    if test -d "$$p"; \
+    then \
+        printf 'will not overwrite directory: %s\n' "$$p" >&2; \
+        exit 1; \
+    fi; \
+done
 	$(INSTALL_PROGRAM) $(shim) $(DESTDIR)$(bindir)/$(shim)
 	-$(INSTALL_DATA) $(shimman) $(DESTDIR)$(man1dir)/$(shimman)
 
