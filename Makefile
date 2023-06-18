@@ -17,6 +17,7 @@
 
 .POSIX:
 .SUFFIXES:
+.SUFFIXES: .m4
 
 
 # ---------------
@@ -99,8 +100,8 @@ $(progman) $(shimman): $(prog).adoc
 
 # Portably imitate .DELETE_ON_ERROR [4] because m4(1) may fail after the
 # shell creates/truncates the target.
-$(shim): $(shim).m4
-	$(M4) $(all_m4flags) $(shim).m4 >$@ || $(cleanup)
+.m4:
+	$(M4) $(all_m4flags) $< >$@ || $(cleanup)
 
 # Imitate .PHONY portably [5].
 FORCE:
