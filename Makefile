@@ -25,10 +25,7 @@
 SHELL = /bin/sh
 
 ASCIIDOCTOR = asciidoctor
-# Reduce the number of shells in play by invoking install-sh with
-# the same shell that make(1) uses.  Use "./install-sh" instead of
-# "install-sh" to preclude inadvertent PATH searches [1][2].
-INSTALL = $(SHELL) ./install-sh
+INSTALL = ./install-sh
 INSTALL_DATA = $(INSTALL) -m 644
 INSTALL_PROGRAM = $(INSTALL)
 M4 = m4
@@ -90,26 +87,24 @@ uninstall: FORCE
 uninstallshim: FORCE
 	rm -f $(DESTDIR)$(bindir)/$(shim) $(DESTDIR)$(man1dir)/$(shimman)
 
-# TODO: Decide if SOURCE_DATE_EPOCH is worth bothering with [3][4][5].
+# TODO: Decide if SOURCE_DATE_EPOCH is worth bothering with [1][2][3].
 $(progman) $(shimman): $(prog).adoc
 	$(ASCIIDOCTOR) --backend=manpage $(ASCIIDOCTORFLAGS) $(prog).adoc
 
-# Portably imitate .DELETE_ON_ERROR [6] because m4(1) may fail after the
+# Portably imitate .DELETE_ON_ERROR [4] because m4(1) may fail after the
 # shell creates/truncates the target.
 $(shim): $(shim).m4
 	$(M4) $(all_m4flags) $(shim).m4 >$@ || $(cleanup)
 
-# Imitate .PHONY portably [7].
+# Imitate .PHONY portably [5].
 FORCE:
 
 
 # ----------
 # REFERENCES
 #
-#  1. https://www.gnu.org/software/autoconf/manual/autoconf-2.71/html_node/Invoking-the-Shell.html
-#  2. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/sh.html
-#  3. https://docs.asciidoctor.org/asciidoc/latest/attributes/document-attributes-ref/#note-sourcedateepoch
-#  4. https://reproducible-builds.org/docs/source-date-epoch/
-#  5. https://reproducible-builds.org/specs/source-date-epoch/
-#  6. https://www.gnu.org/software/make/manual/html_node/Errors.html
-#  7. https://www.gnu.org/software/make/manual/html_node/Force-Targets
+#  1. https://docs.asciidoctor.org/asciidoc/latest/attributes/document-attributes-ref/#note-sourcedateepoch
+#  2. https://reproducible-builds.org/docs/source-date-epoch/
+#  3. https://reproducible-builds.org/specs/source-date-epoch/
+#  4. https://www.gnu.org/software/make/manual/html_node/Errors.html
+#  5. https://www.gnu.org/software/make/manual/html_node/Force-Targets
