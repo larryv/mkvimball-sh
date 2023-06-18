@@ -45,7 +45,8 @@ prefix = /usr/local
 # "PRIVATE" MACROS
 
 do_cleanup = { rc=$$?; rm -f $@ && exit "$$rc"; }
-do_m4 = $(M4) -D __MKVIMBALL_SH__=$(bindir)/$(prog) $(M4FLAGS)
+# Insert M4FLAGS first to accommodate SysV options that must precede -D.
+do_m4 = $(M4) $(M4FLAGS) -D __MKVIMBALL_SH__=$(bindir)/$(prog)
 manext = .1
 prog = mkvimball-sh
 progman = $(prog)$(manext)
