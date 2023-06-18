@@ -35,10 +35,10 @@ stdoutflag=1
 
 while :
 do
-	# NOTE: When adding a new option, update the usage text and, if the
-	# new option takes an option-argument, the "-??*" case.
+	# NOTE: When adding a new option, update the usage text and, if
+	# the new option takes an option-argument, the "-??*" case.
 
-	# Don't warn about "set x ...", which I'm using as a workaround [1].
+	# Ignore "set x ...", which I'm using as a workaround [1].
 	# shellcheck disable=SC2121
 	case $1 in
 		-a)
@@ -58,13 +58,15 @@ EOF
 			shift
 			;;
 		-"$lf"?*)
-			# For an option group that begins with <LF> or <apostrophe>
-			# (see the next case), just drop the remaining options and
-			# let the "-?" case error out on the next iteration.  (The
-			# case that handles other option groups uses a sed script
-			# that does not work if the leading option is <LF> or
-			# <apostrophe>.  Handling them separately is easier and more
-			# legible than fully generalizing that script.)
+			# For an option group that begins with <LF> or
+			# <apostrophe> (see the next case), just drop
+			# the remaining options and let the "-?" case
+			# error out on the next iteration.  (The case
+			# that handles other option groups uses a sed
+			# script that does not work if the leading
+			# option is <LF> or <apostrophe>.  Handling them
+			# separately is easier and more legible than
+			# fully generalizing that script.)
 			set x "-$lf"
 			;;
 		-\'?*)
@@ -72,13 +74,14 @@ EOF
 			set x -\'
 			;;
 		-??*)
-			# Handle an option group "-xyz" by replacing it with
-			#   - "-x" and "yz" if "-x" takes an option-argument
+			# Handle "-xyz" by replacing it with
+			#   - "-x" and "yz" if "-x" takes an argument
 			#   - "-x" and "-yz" otherwise
-			# and iterating anew.  Unfortunately, I cannot think of
-			# a better way to Bourne-compatibly preserve trailing <LF>
-			# characters than splitting and quoting [2] the argument
-			# with a utility and using the result with eval(1).
+			# and iterating anew.  Unfortunately, I cannot
+			# think of a better way to Bourne-compatibly
+			# preserve trailing <LF>s than splitting and
+			# quoting [2] the argument with a utility and
+			# using the result with eval(1).
 			case $1 in
 				-f*) quoteandsplit="s/'/'\\\\''/g;1s/^-./'&' '/;\$s/\$/'/" ;;
 				*) quoteandsplit="s/'/'\\\\''/g;1s/^-./'&' '-/;\$s/\$/'/" ;;
@@ -87,7 +90,8 @@ EOF
 $1
 EOF
 ` || exit "$?"
-			# Don't know if it's worth making this more comprehensive.
+			# Don't know if it's worth improving this.
+			# shellcheck disable=SC2319
 			test "x$quotedsplitopts" != x || exit "$?"
 
 			shift
@@ -140,8 +144,9 @@ case $# in
 	0) sed 's/\\/\\\\/g' ;;
 	*) : ;;
 esac | while
-	# Standard input is not passed through if there are operands, so the
-	# "0" case terminates both methods of obtaining input pathnames.
+	# Standard input is not passed through if there are operands, so
+	# the "0" case terminates both methods of obtaining input
+	# pathnames.
 	case $# in
 		0) IFS= read filepath || test "x$filepath" != x ;;
 		*) filepath=$1; shift ;;

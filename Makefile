@@ -19,8 +19,10 @@
 .SUFFIXES:
 
 
-# ------------------
-# USER-FACING MACROS
+# ---------------
+# "PUBLIC" MACROS
+
+# Remember to update the READMEs after adding new macros here.
 
 SHELL = /bin/sh
 
@@ -38,8 +40,8 @@ mandir = $(datarootdir)/man
 prefix = /usr/local
 
 
-# ---------------
-# INTERNAL MACROS
+# ----------------
+# "PRIVATE" MACROS
 
 all_m4flags = -D __MKVIMBALL_SH__=$(bindir)/$(prog) $(M4FLAGS)
 cleanup = { rc=$$?; rm -f $@ && exit "$$rc"; }
@@ -50,8 +52,8 @@ shim = mkvimball
 shimman = $(shim)$(manext)
 
 
-# -------
-# TARGETS
+# --------------
+# "PUBLIC" RULES
 
 all: FORCE $(prog) $(progman) $(shim) $(shimman)
 
@@ -86,6 +88,10 @@ uninstall: FORCE
 # shim selectively.
 uninstallshim: FORCE
 	rm -f $(DESTDIR)$(bindir)/$(shim) $(DESTDIR)$(man1dir)/$(shimman)
+
+
+# ---------------
+# "PRIVATE" RULES
 
 # TODO: Decide if SOURCE_DATE_EPOCH is worth bothering with [1][2][3].
 $(progman) $(shimman): $(prog).adoc
