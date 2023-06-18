@@ -47,7 +47,8 @@ undivert(1)
 # TODO: Implement weird interactive mode.
 
 
-if test "$#" -lt 2; then
+if test "$#" -lt 2
+then
 	echo >&2 'usage: mkvimball archivebase file ...'
 	exit 1
 fi

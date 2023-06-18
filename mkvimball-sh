@@ -33,7 +33,8 @@ appendflag=
 archivepath=
 stdoutflag=1
 
-while :; do
+while :
+do
 	# NOTE: When adding a new option, update the usage text and, if the
 	# new option takes an option-argument, the "-??*" case.
 
@@ -44,7 +45,8 @@ while :; do
 			appendflag=1
 			;;
 		-f)
-			if test "$#" -lt 2; then
+			if test "$#" -lt 2
+			then
 				cat >&2 <<EOF
 mkvimball-sh: -f requires an option-argument
 $usage
@@ -112,15 +114,18 @@ EOF
 	shift
 done
 
-if test ! "$stdoutflag"; then
-	if test ! "$appendflag"; then
+if test ! "$stdoutflag"
+then
+	if test ! "$appendflag"
+	then
 		exec >"$archivepath"
 	else
 		exec >>"$archivepath"
 	fi
 fi
 
-if test ! "$appendflag"; then
+if test ! "$appendflag"
+then
 	# Use an older header for backward compatibility.
 	cat <<\EOF || exit "$?"
 " Vimball Archiver by Charles E. Campbell, Jr., Ph.D.
