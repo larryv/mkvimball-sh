@@ -44,8 +44,8 @@ prefix = /usr/local
 # ----------------
 # "PRIVATE" MACROS
 
-all_m4flags = -D __MKVIMBALL_SH__=$(bindir)/$(prog) $(M4FLAGS)
 do_cleanup = { rc=$$?; rm -f $@ && exit "$$rc"; }
+do_m4 = $(M4) -D __MKVIMBALL_SH__=$(bindir)/$(prog) $(M4FLAGS)
 manext = .1
 prog = mkvimball-sh
 progman = $(prog)$(manext)
@@ -101,7 +101,7 @@ $(progman) $(shimman): $(prog).adoc
 # Portably imitate .DELETE_ON_ERROR [4] because m4(1) may fail after the
 # shell creates/truncates the target.
 .m4:
-	$(M4) $(all_m4flags) $< >$@ || $(do_cleanup)
+	$(do_m4) $< >$@ || $(do_cleanup)
 
 # Imitate .PHONY portably [5].
 FORCE:
