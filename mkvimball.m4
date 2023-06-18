@@ -1,3 +1,24 @@
+divert(1)dnl
+dnl
+dnl
+dnl mkvimball.m4
+dnl ------------
+dnl
+dnl SPDX-License-Identifier: CC0-1.0
+dnl
+dnl Written in 2022-2023 by Lawrence Velazquez <vq@larryv.me>.
+dnl
+# To the extent possible under law, the author(s) have dedicated all
+# copyright and related and neighboring rights to this software to the
+# public domain worldwide.  This software is distributed without any
+# warranty.
+#
+# You should have received a copy of the CC0 Public Domain Dedication
+# along with this software.  If not, see
+# <https://creativecommons.org/publicdomain/zero/1.0/>.
+dnl
+dnl
+divert`'dnl
 #!/bin/sh -
 
 # mkvimball - Compatibility shim for mkvimball-sh 0.2
@@ -7,15 +28,7 @@
 #
 # Written in 2022 by Lawrence Velazquez <vq@larryv.me>.
 #
-# To the extent possible under law, the author(s) have dedicated all
-# copyright and related and neighboring rights to this software to the
-# public domain worldwide.  This software is distributed without any
-# warranty.
-#
-# You should have received a copy of the CC0 Public Domain Dedication
-# along with this software.  If not, see
-# <https://creativecommons.org/publicdomain/zero/1.0/>.
-
+undivert(1)
 
 # This shim provides drop-in compatibility with Charles E. Campbell's
 # original `mkvimball` [*].  It doesn't recognize options or the
