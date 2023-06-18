@@ -84,9 +84,10 @@ EOF
 			# quoting [2] the argument with a utility and
 			# using the result with eval(1).
 			case $1 in
-				-f*) quoteandsplit="s/'/'\\\\''/g;1s/^-./'&' '/;\$s/\$/'/" ;;
-				*) quoteandsplit="s/'/'\\\\''/g;1s/^-./'&' '-/;\$s/\$/'/" ;;
+				-f*) splitcmd="1s/^-./'&' '/" ;;
+				*) splitcmd="1s/^-./'&' '-/" ;;
 			esac
+			quoteandsplit="s/'/'\\\\''/g;$splitcmd;\$s/\$/'/"
 			quotedsplitopts=`sed "$quoteandsplit" <<EOF
 $1
 EOF
