@@ -27,7 +27,7 @@ divert[]dnl
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2022-2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 undivert(1)
 
@@ -48,17 +48,17 @@ undivert(1)
 
 
 if test "$#" -lt 2; then
-    echo >&2 'usage: mkvimball archivebase file ...'
-    exit 1
+	echo >&2 'usage: mkvimball archivebase file ...'
+	exit 1
 fi
 
 case $1 in
-    *.*)
-        cat >&2 <<EOF
+	*.*)
+		cat >&2 <<EOF
 mkvimball: archivebase cannot contain '.': $1
 EOF
-        exit 1
-        ;;
+		exit 1
+		;;
 esac
 
 archivepath=$1.vba
@@ -66,6 +66,6 @@ archivepath=$1.vba
 
 ifdef([__MKVIMBALL_SH__], [], [define([__MKVIMBALL_SH__], [mkvimball-sh])])dnl
 case $# in
-    0) exec defn([__MKVIMBALL_SH__]) -f "$archivepath" ;;
-    *) exec defn([__MKVIMBALL_SH__]) -f "$archivepath" -- "$@" ;;
+	0) exec defn([__MKVIMBALL_SH__]) -f "$archivepath" ;;
+	*) exec defn([__MKVIMBALL_SH__]) -f "$archivepath" -- "$@" ;;
 esac

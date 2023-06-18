@@ -5,7 +5,7 @@
 #
 # SPDX-License-Identifier: CC0-1.0
 #
-# Written in 2022 by Lawrence Velazquez <vq@larryv.me>.
+# Written in 2022-2023 by Lawrence Velazquez <vq@larryv.me>.
 #
 # To the extent possible under law, the author has dedicated all
 # copyright and related and neighboring rights to this software to the
@@ -34,95 +34,95 @@ archivepath=
 stdoutflag=1
 
 while :; do
-    # NOTE: When adding a new option, update the usage text and, if the
-    # new option takes an option-argument, the "-??*" case.
+	# NOTE: When adding a new option, update the usage text and, if the
+	# new option takes an option-argument, the "-??*" case.
 
-    # Don't warn about "set x ...", which I'm using as a workaround [1].
-    # shellcheck disable=SC2121
-    case $1 in
-        -a)
-            appendflag=1
-            ;;
-        -f)
-            if test "$#" -lt 2; then
-                cat >&2 <<EOF
+	# Don't warn about "set x ...", which I'm using as a workaround [1].
+	# shellcheck disable=SC2121
+	case $1 in
+		-a)
+			appendflag=1
+			;;
+		-f)
+			if test "$#" -lt 2; then
+				cat >&2 <<EOF
 mkvimball-sh: -f requires an option-argument
 $usage
 EOF
-                exit 1
-            fi
-            stdoutflag=
-            archivepath=$2
-            shift
-            ;;
-        -"$lf"?*)
-            # For an option group that begins with <LF> or <apostrophe>
-            # (see the next case), just drop the remaining options and
-            # let the "-?" case error out on the next iteration.  (The
-            # case that handles other option groups uses a sed script
-            # that does not work if the leading option is <LF> or
-            # <apostrophe>.  Handling them separately is easier and more
-            # legible than fully generalizing that script.)
-            set x "-$lf"
-            ;;
-        -\'?*)
-            # See above.
-            set x -\'
-            ;;
-        -??*)
-            # Handle an option group "-xyz" by replacing it with
-            #   - "-x" and "yz" if "-x" takes an option-argument
-            #   - "-x" and "-yz" otherwise
-            # and iterating anew.  Unfortunately, I cannot think of
-            # a better way to Bourne-compatibly preserve trailing <LF>
-            # characters than splitting and quoting [2] the argument
-            # with a utility and using the result with eval(1).
-            case $1 in
-                -f*) quoteandsplit="s/'/'\\\\''/g;1s/^-./'&' '/;\$s/\$/'/" ;;
-                *) quoteandsplit="s/'/'\\\\''/g;1s/^-./'&' '-/;\$s/\$/'/" ;;
-            esac
-            quotedsplitopts=`sed "$quoteandsplit" <<EOF
+				exit 1
+			fi
+			stdoutflag=
+			archivepath=$2
+			shift
+			;;
+		-"$lf"?*)
+			# For an option group that begins with <LF> or <apostrophe>
+			# (see the next case), just drop the remaining options and
+			# let the "-?" case error out on the next iteration.  (The
+			# case that handles other option groups uses a sed script
+			# that does not work if the leading option is <LF> or
+			# <apostrophe>.  Handling them separately is easier and more
+			# legible than fully generalizing that script.)
+			set x "-$lf"
+			;;
+		-\'?*)
+			# See above.
+			set x -\'
+			;;
+		-??*)
+			# Handle an option group "-xyz" by replacing it with
+			#   - "-x" and "yz" if "-x" takes an option-argument
+			#   - "-x" and "-yz" otherwise
+			# and iterating anew.  Unfortunately, I cannot think of
+			# a better way to Bourne-compatibly preserve trailing <LF>
+			# characters than splitting and quoting [2] the argument
+			# with a utility and using the result with eval(1).
+			case $1 in
+				-f*) quoteandsplit="s/'/'\\\\''/g;1s/^-./'&' '/;\$s/\$/'/" ;;
+				*) quoteandsplit="s/'/'\\\\''/g;1s/^-./'&' '-/;\$s/\$/'/" ;;
+			esac
+			quotedsplitopts=`sed "$quoteandsplit" <<EOF
 $1
 EOF
 ` || exit "$?"
-            # Don't know if it's worth making this more comprehensive.
-            test "x$quotedsplitopts" != x || exit "$?"
+			# Don't know if it's worth making this more comprehensive.
+			test "x$quotedsplitopts" != x || exit "$?"
 
-            shift
-            case $# in
-                0) eval set x "$quotedsplitopts" ;;
-                *) eval set x "$quotedsplitopts" '"$@"' ;;
-            esac
-            ;;
-        --)
-            shift
-            break
-            ;;
-        -?)
-            cat >&2 <<EOF
+			shift
+			case $# in
+				0) eval set x "$quotedsplitopts" ;;
+				*) eval set x "$quotedsplitopts" '"$@"' ;;
+			esac
+			;;
+		--)
+			shift
+			break
+			;;
+		-?)
+			cat >&2 <<EOF
 mkvimball-sh: unknown option: $1
 $usage
 EOF
-            exit 1
-            ;;
-        *)
-            break
-            ;;
-    esac
-    shift
+			exit 1
+			;;
+		*)
+			break
+			;;
+	esac
+	shift
 done
 
 if test ! "$stdoutflag"; then
-    if test ! "$appendflag"; then
-        exec >"$archivepath"
-    else
-        exec >>"$archivepath"
-    fi
+	if test ! "$appendflag"; then
+		exec >"$archivepath"
+	else
+		exec >>"$archivepath"
+	fi
 fi
 
 if test ! "$appendflag"; then
-    # Use an older header for backward compatibility.
-    cat <<\EOF || exit "$?"
+	# Use an older header for backward compatibility.
+	cat <<\EOF || exit "$?"
 " Vimball Archiver by Charles E. Campbell, Jr., Ph.D.
 UseVimball
 finish
@@ -132,21 +132,21 @@ fi
 # Imitate pax(1) by reading <LF>-terminated input pathnames from
 # standard input in the absence of operands [3].
 case $# in
-    0) sed 's/\\/\\\\/g' ;;
-    *) : ;;
+	0) sed 's/\\/\\\\/g' ;;
+	*) : ;;
 esac | while
-    # Standard input is not passed through if there are operands, so the
-    # "0" case terminates both methods of obtaining input pathnames.
-    case $# in
-        0) IFS= read filepath || test "x$filepath" != x ;;
-        *) filepath=$1; shift ;;
-    esac
+	# Standard input is not passed through if there are operands, so the
+	# "0" case terminates both methods of obtaining input pathnames.
+	case $# in
+		0) IFS= read filepath || test "x$filepath" != x ;;
+		*) filepath=$1; shift ;;
+	esac
 do
-    # Some wc(1) implementations (i.e., macOS) pad the output.
-    filelinecount=`wc -l <"$filepath" | tr -d '[:blank:]'` || exit "$?"
-    test "x$filelinecount" != x || exit "$?"
+	# Some wc(1) implementations (i.e., macOS) pad the output.
+	filelinecount=`wc -l <"$filepath" | tr -d '[:blank:]'` || exit "$?"
+	test "x$filelinecount" != x || exit "$?"
 
-    cat - "$filepath" <<EOF || exit "$?"
+	cat - "$filepath" <<EOF || exit "$?"
 ${filepath}${tab}[[[1
 $filelinecount
 EOF
