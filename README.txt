@@ -11,18 +11,18 @@ for drop-in compatibility with `mkvimball`.
 Requirements
 ------------
 
--   A relatively recent Bourne or Bourne-compatible (including
+  - A relatively recent Bourne or Bourne-compatible (including
     POSIX-conformant [4]) shell, available at `/bin/sh`.
 
--   The typical Unix utilities, plus a couple that could be considered
+  - The typical Unix utilities, plus a couple that could be considered
     atypical:
 
-    -   `m4` [5] for creating the compatibility shim.
-    -   `make` [6] for installation.
+      - `m4` [5] for creating the compatibility shim.
+      - `make` [6] for installation.
 
     POSIX conformance [7] is ideal, but minor transgressions are fine.
 
--   Asciidoctor [8] for regenerating the manual pages.  Only necessary
+  - Asciidoctor [8] for regenerating the manual pages.  Only necessary
     if modifying the documentation source.
 
 
