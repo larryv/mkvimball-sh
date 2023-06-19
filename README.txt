@@ -22,12 +22,14 @@ Requirements
 
     POSIX conformance [7] is ideal, but minor transgressions are fine.
 
-  - Asciidoctor [8] for regenerating the manual pages.  Only necessary
+  - ShellCheck [8] for optional testing.
+
+  - Asciidoctor [9] for regenerating the manual pages.  Only necessary
     if modifying the documentation source.
 
 
-Installation / Uninstallation
------------------------------
+Installation, etc.
+------------------
 
 To install/uninstall the `mkvimball-sh` utility to/from `/usr/local`
 (privileges required, presumably):
@@ -46,17 +48,21 @@ To uninstall the shim (but not `mkvimball-sh`):
     cd /path/to/this/repo && make uninstallshim
 
 To use an installation prefix other than `/usr/local`, define the
-`prefix` [9] macro when invoking `make`.  For example:
+`prefix` [10] macro when invoking `make`.  For example:
 
     cd /path/to/this/repo && make prefix=/opt installshim
     cd /path/to/this/repo && make prefix=/opt uninstall uninstallshim
 
+To run basic tests:
+
+    cd /path/to/this/repo && make check
+
 The `bindir`, `datarootdir`, `exec_prefix`, `man1dir`, and `mandir`
-macros are supported for unorthodox installation hierarchies [9].  The
-`DESTDIR` macro is supported for staged installs [10].  The
+macros are supported for unorthodox installation hierarchies [10].  The
+`DESTDIR` macro is supported for staged installs [11].  The
 `ASCIIDOCTOR` (with `ASCIIDOCTORFLAGS`), `INSTALL`, `INSTALL_DATA`,
-`INSTALL_PROGRAM`, and `M4` (with `M4FLAGS`) macros are supported for
-using alternate tools [11].
+`INSTALL_PROGRAM`, `M4` (with `M4FLAGS`), and `SHELLCHECK` (with
+`SHELLCHECKFLAGS`) macros are supported for using alternate tools [12].
 
 
 Usage
@@ -65,7 +71,7 @@ Usage
     mkvimball-sh [-a] [-f <archive>] [--] [<file> ...]
 
 The `mkvimball-sh` utility copies the contents of its input text files
-[12] to a vimball archive.  The input files can be specified as <file>
+[13] to a vimball archive.  The input files can be specified as <file>
 operands or as a list of LF-terminated paths on standard input.  The
 archive is written to standard output or, if `-f` is specified, to
 <archive>.  If `-a` is specified, the archive header is omitted from the
@@ -102,11 +108,12 @@ References
  5. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/m4.html
  6. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/make.html
  7. https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap04.html
- 8. https://asciidoctor.org
- 9. https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html
-10. https://www.gnu.org/software/make/manual/html_node/DESTDIR.html
-11. https://www.gnu.org/software/make/manual/html_node/Command-Variables.html
-12. https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403
+ 8. https://www.shellcheck.net
+ 9. https://asciidoctor.org
+10. https://www.gnu.org/software/make/manual/html_node/Directory-Variables.html
+11. https://www.gnu.org/software/make/manual/html_node/DESTDIR.html
+12. https://www.gnu.org/software/make/manual/html_node/Command-Variables.html
+13. https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_403
 
 
 SPDX-License-Identifier: CC0-1.0

@@ -68,11 +68,13 @@ for installation.
 title="{title-posix} - Volume 3, Chapter 4 ('Utilities')"]
 is ideal, but minor transgressions are fine.
 
+* https://www.shellcheck.net[ShellCheck] for optional testing.
+
 * https://asciidoctor.org[Asciidoctor] for regenerating the manual
 pages.  Only necessary if modifying the documentation source.
 
 
-== Installation / Uninstallation
+== Installation, etc.
 
 To install/uninstall the `mkvimball-sh` utility to/from `/usr/local`
 (privileges required, presumably):
@@ -115,6 +117,11 @@ cd /path/to/this/repo && make prefix=/opt installshim
 [source]
 cd /path/to/this/repo && make prefix=/opt uninstall uninstallshim
 
+To run basic tests:
+
+[source]
+cd /path/to/this/repo && make check
+
 The
 `{url-gmake-man-dirvars}#index-bindir[bindir,
 title={title-gmake-man-dirvars} - 'bindir']`,
@@ -137,8 +144,10 @@ title={title-gmake-man-cmdvars}]`,
 title={title-gmake-man-cmdvars}]`,
 `{url-gmake-man-cmdvars}[INSTALL_PROGRAM,
 title={title-gmake-man-cmdvars}]`,
-and `M4` (with `M4FLAGS`) macros are supported for using alternate
-tools.
+`M4` (with `M4FLAGS`),
+and
+`SHELLCHECK` (with `SHELLCHECKFLAGS`)
+macros are supported for using alternate tools.
 
 
 == Usage

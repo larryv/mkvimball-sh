@@ -32,6 +32,7 @@ INSTALL = ./install-sh
 INSTALL_DATA = $(INSTALL) -m 644
 INSTALL_PROGRAM = $(INSTALL)
 M4 = m4
+SHELLCHECK = shellcheck
 
 bindir = $(exec_prefix)/bin
 datarootdir = $(prefix)/share
@@ -58,6 +59,9 @@ shimman = $(shim)$(manext)
 # "PUBLIC" RULES
 
 all: FORCE $(prog) $(progman) $(shim) $(shimman)
+
+check: FORCE $(prog) $(shim)
+	$(SHELLCHECK) $(SHELLCHECKFLAGS) $(prog) $(shim)
 
 clean: FORCE
 	rm -f $(shim)
