@@ -128,6 +128,7 @@ $(progman) $(shimman): $(prog).adoc
 # shell creates/truncates the target.
 .m4:
 	$(do_m4) $< >$@ || $(do_cleanup)
+	-chmod +x $@
 
 # Imitate .PHONY portably [5].
 FORCE:
