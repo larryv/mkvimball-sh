@@ -23,7 +23,7 @@
 # ---------------
 # "PUBLIC" MACROS
 
-# Remember to update the READMEs after adding new macros here.
+# NOTE: Update the READMEs after adding new macros here.
 
 SHELL = /bin/sh
 
@@ -46,7 +46,8 @@ prefix = /usr/local
 # "PRIVATE" MACROS
 
 do_cleanup = { rc=$$?; rm -f $@ && exit "$$rc"; }
-# Insert M4FLAGS first to accommodate SysV options that must precede -D.
+# Insert M4FLAGS first to allow the use of System V options that must
+# precede -D [1].
 do_m4 = $(M4) $(M4FLAGS) -D __MKVIMBALL_SH__=$(bindir)/$(prog)
 manext = .1
 prog = mkvimball-sh
@@ -66,13 +67,13 @@ check: FORCE $(prog) $(shim)
 clean: FORCE
 	rm -f $(shim)
 
-# The `install` target doesn't install the shim, so that a casual `make
-# install` won't overwrite the original `mkvimball` if present.  The
-# `installshim` target can be used to install the shim.
-
-# If BAR/FOO is a directory or a symlink to one, then the behavior of
-# `install FOO BAR` varies *significantly* among implementations.
-# Ensure consistent results by detecting this situation and bailing out.
+# If BAR/FOO is a directory or a symbolic link to one, then the behavior
+# of "install FOO BAR" varies *significantly* among implementations.
+# Ensures consistency by detecting this situation early and bailing out.
+#
+# Intentionally doesn't install the shim, so a casual "make install"
+# won't overwrite the original "mkvimball" if present.  The shim must be
+# installed using the "installshim" target.
 install: FORCE $(prog) $(progman) installdirs
 	@for p in $(DESTDIR)$(bindir)/$(prog) $(DESTDIR)$(man1dir)/$(progman); \
 do \
@@ -89,7 +90,7 @@ installdirs: FORCE
 	$(INSTALL) -d $(DESTDIR)$(bindir)
 	-$(INSTALL) -d $(DESTDIR)$(man1dir)
 
-# See the `install` target for an explanation of the gross prelude.
+# See the "install" target for an explanation of the gross prelude.
 installshim: FORCE $(shim) $(shimman) install
 	@for p in $(DESTDIR)$(bindir)/$(shim) $(DESTDIR)$(man1dir)/$(shimman); \
 do \
@@ -105,14 +106,14 @@ done
 maintainerclean: FORCE clean
 	rm -f $(progman) $(shimman)
 
-# Doesn't delete the shim, so that a casual `make uninstall` won't
-# remove the original `mkvimball` if present.  The `uninstallshim`
-# target can be used to remove the shim.
+# Intentionally doesn't delete the shim, so a casual "make uninstall"
+# won't remove the original "mkvimball" if present.  The shim must be
+# removed using the "uninstallshim" target.
 uninstall: FORCE
 	rm -f $(DESTDIR)$(bindir)/$(prog) $(DESTDIR)$(man1dir)/$(progman)
 
-# Intentionally does not depend on `uninstall`, to allow removing the
-# shim selectively.
+# Intentionally does not depend on the "uninstall" target, to allow
+# removing the shim selectively.
 uninstallshim: FORCE
 	rm -f $(DESTDIR)$(bindir)/$(shim) $(DESTDIR)$(man1dir)/$(shimman)
 
@@ -120,25 +121,26 @@ uninstallshim: FORCE
 # ---------------
 # "PRIVATE" RULES
 
-# TODO: Decide if SOURCE_DATE_EPOCH is worth bothering with [1][2][3].
+# TODO: Decide if SOURCE_DATE_EPOCH is worth bothering with [2][3][4].
 $(progman) $(shimman): $(prog).adoc
 	$(ASCIIDOCTOR) --backend=manpage $(ASCIIDOCTORFLAGS) $(prog).adoc
 
-# Portably imitate .DELETE_ON_ERROR [4] because m4(1) may fail after the
+# Portably imitate .DELETE_ON_ERROR [5] because m4(1) may fail after the
 # shell creates/truncates the target.
 .m4:
 	$(do_m4) $< >$@ || $(do_cleanup)
 	-chmod +x $@
 
-# Imitate .PHONY portably [5].
+# Imitate .PHONY portably [6].
 FORCE:
 
 
 # ----------
 # REFERENCES
 #
-#  1. https://docs.asciidoctor.org/asciidoc/latest/attributes/document-attributes-ref/#note-sourcedateepoch
-#  2. https://reproducible-builds.org/docs/source-date-epoch/
-#  3. https://reproducible-builds.org/specs/source-date-epoch/
-#  4. https://www.gnu.org/software/make/manual/html_node/Errors.html
-#  5. https://www.gnu.org/software/make/manual/html_node/Force-Targets
+#  1. https://docs.oracle.com/cd/E88353_01/html/E37839/m4-1.html
+#  2. https://docs.asciidoctor.org/asciidoc/latest/attributes/document-attributes-ref/#note-sourcedateepoch
+#  3. https://reproducible-builds.org/docs/source-date-epoch/
+#  4. https://reproducible-builds.org/specs/source-date-epoch/
+#  5. https://www.gnu.org/software/make/manual/html_node/Errors.html
+#  6. https://www.gnu.org/software/make/manual/html_node/Force-Targets
